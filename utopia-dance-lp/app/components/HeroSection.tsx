@@ -122,7 +122,7 @@ export default function HeroSection() {
             transition={{ duration: 1, delay: 0.3 }}
           >
             <p style={{ marginBottom: '0.25rem' }}>aka Wa.Se.Da.</p>
-            <p style={{ marginBottom: '0.25rem' }}>4/2a</p>
+            <p style={{ marginBottom: '0.25rem' }}>4/26</p>
             <p>16th春公演</p>
           </motion.div>
           
@@ -132,9 +132,20 @@ export default function HeroSection() {
             animate={{ opacity: loaded ? 1 : 0 }}
             transition={{ duration: 1, delay: 0.6 }}
           >
-            <p style={{ marginBottom: '0.25rem' }}>open : OO/OO</p>
-            <p>start : OO/OO</p>
+             <p style={{ marginBottom: '0.25rem' }}>昼公演</p>
+            <p style={{ marginBottom: '0.25rem' }}>open : 12:30</p>
+            <p>start : 13:00</p>
           </motion.div>
+          <motion.div
+            style={infoStyle}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: loaded ? 1 : 0 }}
+            transition={{ duration: 1, delay: 0.6 }}
+          >
+             <p style={{ marginBottom: '0.25rem' }}>夜公演</p>
+            <p style={{ marginBottom: '0.25rem' }}>open : 16:00</p>
+            <p>start : 16:30</p>
+            </motion.div>
         </div>
       </div>
     </section>
