@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import React, { CSSProperties, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -16,27 +17,39 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // メニューオープン時にスクロールを無効化
+  // メニューオープン時にスクロールを制御
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.overflow = '';
+      document.body.style.width = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY, 10) * -1);
+      }
+    }
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
     };
   }, [isOpen]);
 
   // 全画面メニューのアニメーションバリアント
   const menuVariants = {
-    closed: {
-      opacity: 0,
-      y: '-100%',
-    },
+    closed: { opacity: 0, y: '-100%' },
     open: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1],
-      },
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
     },
   };
 
@@ -46,10 +59,7 @@ export default function Navbar() {
     open: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: {
-        delay: i * 0.05,
-        duration: 0.4,
-      },
+      transition: { delay: i * 0.05, duration: 0.4 },
     }),
   };
 
@@ -86,24 +96,30 @@ export default function Navbar() {
     zIndex: 1001,
   };
 
-  // フルスクリーンメニュー（半透明黒背景・縦スクロール対応）
+  // フルスクリーンメニュー全体（画面全体を覆い、中央に配置）
   const fullscreenMenuStyle: CSSProperties = {
     position: 'fixed',
     top: 0,
     left: 0,
     width: '100%',
-    minHeight: '100vh',
+    height: '100vh',
     backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    zIndex: 999,
+    padding: '2rem 1rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
+
+  // メニュー内コンテナ（中央に配置・縦スクロール可能）
+  const menuContainerStyle: CSSProperties = {
+    width: '100%',
+    maxHeight: '90vh',
+    overflowY: 'auto',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start', // 上から順に並べる
-    paddingTop: '4rem',
-    paddingBottom: '4rem',
-    overflowY: 'scroll',  // ここを 'scroll' に変更
-    overflowX: 'hidden',
-    WebkitOverflowScrolling: 'touch', // iOS 対応
-    zIndex: 1000,
+    gap: '1.5rem',
   };
 
   const fullscreenMenuItemStyle: CSSProperties = {
@@ -116,19 +132,18 @@ export default function Navbar() {
     padding: '0.5rem 1rem',
     letterSpacing: '0.1em',
     transition: 'color 0.3s, transform 0.3s',
+    display: 'block',
   };
 
-  // 幹部挨拶、ロゴデザイン、SpecialThanks は下線付き
   const underlinedLinkStyle: CSSProperties = {
     ...fullscreenMenuItemStyle,
     textDecoration: 'underline',
   };
 
-  // 「公演ジャンル」の見出しにも下線
   const categoryTitleStyle: CSSProperties = {
     color: '#fff',
     fontSize: '1rem',
-    marginTop: '2rem',
+    marginTop: '1.5rem',
     marginBottom: '0.5rem',
     fontWeight: '300',
     textAlign: 'center',
@@ -138,7 +153,6 @@ export default function Navbar() {
     textDecoration: 'underline',
   };
 
-  // ハンバーガーメニューのスタイル（白い三本線アイコンのみ）
   const hamburgerStyle: CSSProperties = {
     backgroundColor: 'transparent',
     border: 'none',
@@ -153,7 +167,6 @@ export default function Navbar() {
     zIndex: 1001,
   };
 
-  // 公演ジャンル（M順）の項目（各項目を縦に1行ずつ表示）
   const concertGenres = [
     { id: 'M1', name: 'OP', href: '#m1' },
     { id: 'M2', name: 'コレオ', href: '#m2' },
@@ -172,17 +185,6 @@ export default function Navbar() {
     { id: 'M14', name: 'Ending', href: '#m14' },
   ];
 
-  // フルスクリーンメニュー内コンテナのスタイル
-  const menuContainerStyle: CSSProperties = {
-    width: '100%',
-    height: 'auto',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '1.5rem',
-  };
-
-  // セクション区切りライン
   const dividerStyle: CSSProperties = {
     width: '30px',
     height: '1px',
@@ -193,12 +195,10 @@ export default function Navbar() {
   return (
     <header style={navbarStyle}>
       <div style={navContainerStyle}>
-        {/* ロゴ */}
         <Link href="/" style={logoStyle}>
           aka Wa.Se.Da.
         </Link>
 
-        {/* ハンバーガーメニュー（白い三本線アイコンのみ） */}
         <motion.button 
           style={hamburgerStyle}
           onClick={() => setIsOpen(!isOpen)}
@@ -214,12 +214,12 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
           >
             {isOpen ? (
-              // X アイコン（白）
-              <svg fill="none" stroke="white" viewBox="0 0 24 24" width="32" height="32">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" strokeWidth="2" stroke="white" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             ) : (
-              // 白い三本線のアイコン
               <svg fill="none" stroke="white" viewBox="0 0 24 24" width="32" height="32">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
@@ -228,7 +228,6 @@ export default function Navbar() {
         </motion.button>
       </div>
 
-      {/* フルスクリーンメニュー */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -239,9 +238,8 @@ export default function Navbar() {
             variants={menuVariants}
           >
             <div style={menuContainerStyle}>
-              {/* トップセクション */}
               <motion.div
-                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
                 custom={0}
                 variants={itemVariants}
               >
@@ -260,16 +258,23 @@ export default function Navbar() {
                   ロゴデザイン
                 </Link>
               </motion.div>
-              
-              <motion.div style={dividerStyle} custom={1} variants={itemVariants}></motion.div>
-              
-              {/* 公演ジャンル（各項目を縦に並べる） */}
+
+              <motion.div style={dividerStyle} custom={1} variants={itemVariants} />
+
               <motion.div custom={2} variants={itemVariants} style={categoryTitleStyle}>
                 ジャンル
               </motion.div>
-              
+
               <motion.div
-                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  width: '100%',
+                  maxHeight: '40vh',
+                  overflowY: 'auto',
+                  padding: '0.5rem',
+                }}
                 custom={3}
                 variants={itemVariants}
               >
@@ -300,10 +305,9 @@ export default function Navbar() {
                   );
                 })}
               </motion.div>
-              
-              <motion.div style={dividerStyle} custom={4} variants={itemVariants}></motion.div>
-              
-              {/* Special Thanks */}
+
+              <motion.div style={dividerStyle} custom={4} variants={itemVariants} />
+
               <motion.div custom={5} variants={itemVariants}>
                 <Link 
                   href="#special-thanks" 
@@ -313,41 +317,38 @@ export default function Navbar() {
                   Special Thanks
                 </Link>
               </motion.div>
-              
-              <motion.div style={dividerStyle} custom={6} variants={itemVariants}></motion.div>
-              
-              {/* 各種リンク */}
+
+              <motion.div style={dividerStyle} custom={6} variants={itemVariants} />
+
               <motion.div custom={7} variants={itemVariants} style={categoryTitleStyle}>
                 各種リンク
               </motion.div>
-              
+
               <motion.div
                 style={{ display: 'flex', gap: '1.5rem', marginTop: '0.5rem' }}
                 custom={8}
                 variants={itemVariants}
               >
-                {/* Twitter → X アイコン */}
+                {/* Twitter (X) アイコン */}
                 <Link 
                   href="https://x.com/akaWaSeDa2"
                   style={{ color: '#fff' }}
                   onClick={() => setIsOpen(false)}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <svg width="32" height="32" fill="none" stroke="white" viewBox="0 0 24 24" aria-hidden="true">
-                    <path 
-                      d="M6 18L18 6M6 6l12 12" 
-                      stroke="white" 
-                      strokeWidth={2} 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                    />
-                  </svg>
+                 <svg width="32" height="32" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="white"/>
+</svg>
                 </Link>
-                
-                {/* Instagram */}
+
+                {/* Instagram アイコン */}
                 <Link 
                   href="https://www.instagram.com/aka_waseda?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                   style={{ color: '#fff' }}
                   onClick={() => setIsOpen(false)}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <svg width="32" height="32" fill="white" viewBox="0 0 24 24" aria-hidden="true">
                     <path 
@@ -359,12 +360,14 @@ export default function Navbar() {
                     <circle cx="18.406" cy="5.594" r="1.44" />
                   </svg>
                 </Link>
-                
-                {/* YouTube アイコン（復活） */}
+
+                {/* YouTube アイコン */}
                 <Link 
                   href="https://www.youtube.com/@akaWaSeDa2023" 
                   style={{ color: '#fff' }}
                   onClick={() => setIsOpen(false)}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <svg width="32" height="32" fill="white" viewBox="0 0 24 24" aria-hidden="true">
                     <path 
@@ -381,16 +384,14 @@ export default function Navbar() {
                   </svg>
                 </Link>
               </motion.div>
-              
-              {/* コピーライト */}
+
               <motion.div 
                 custom={9} 
                 variants={itemVariants} 
                 style={{
-                  position: 'absolute',
-                  bottom: '1.5rem',
                   color: 'rgba(255, 255, 255, 0.5)',
                   fontSize: '0.75rem',
+                  marginTop: '1.5rem',
                 }}
               >
                 © 2025 UTOPIA
