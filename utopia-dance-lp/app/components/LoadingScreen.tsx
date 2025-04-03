@@ -9,43 +9,23 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadComplete }) => {
   const [progress, setProgress] = useState(0);
   
   useEffect(() => {
-    // リソースのロード状況を追跡するための変数
-    let loading = true;
-    let progressValue = 0;
-    
     // ロード進捗をシミュレートする
     const interval = setInterval(() => {
-      if (!loading) return;
-      
-      // 進捗を段階的に増加させる
-      progressValue += Math.random() * 3 + 1;
-      
-      // ウィンドウのロード状態をチェック
-      if (document.readyState === 'complete') {
-        // ページが完全に読み込まれた場合は、進捗を100%に向けて加速
-        progressValue = Math.min(progressValue + 10, 99);
-        
-        // 少し待ってから100%にして完了
-        if (progressValue >= 99) {
-          progressValue = 100;
-          loading = false;
+      setProgress(prevProgress => {
+        // 100%に達したらコールバックを実行
+        if (prevProgress >= 100) {
           clearInterval(interval);
-          
-          // 完了後に少し待ってからコールバックを実行
           setTimeout(() => {
             onLoadComplete();
-          }, 500);
+          }, 500); // 完了後0.5秒待ってから表示切替
+          return 100;
         }
-      }
-      
-      setProgress(Math.min(progressValue, 100));
-    }, 100);
+        // 進捗をランダムに増加（より自然に見せるため）
+        return Math.min(prevProgress + Math.random() * 5 + 2, 100);
+      });
+    }, 150);
 
-    // コンポーネントのアンマウント時にインターバルをクリア
-    return () => {
-      loading = false;
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, [onLoadComplete]);
 
   return (
