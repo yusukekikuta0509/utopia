@@ -164,7 +164,7 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
       <div style={topHalfStyle}>
         <div style={imageContainerStyle}>
           <Image
-            src={`/images/${safeName.toLowerCase()}.jpg`}
+            src={`/images/${safeName.toLowerCase()}.JPG`}
             alt={`${safeName} dance`}
             fill
             style={{ objectFit: 'cover', filter: 'grayscale(100%)' }}
@@ -190,9 +190,12 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
               display: 'block',
             }}
           >
-            <source src={`/videos/${safeName.toLowerCase()}.mp4`} type="video/mp4" />
-            <source src={`/videos/${safeName.toLowerCase()}.webm`} type="video/webm" />
-            動画をサポートしていないブラウザです。
+             {/* スマホ向け（幅767px以下）の動画 */}
+          <source src={`/videos/${safeName.toLowerCase()}-mobile.mp4`} type="video/mp4" media="(max-width: 767px)" />
+          {/* PC向けの動画 */}
+          <source src={`/videos/${safeName.toLowerCase()}.mp4`} type="video/mp4" />
+          <source src={`/videos/${safeName.toLowerCase()}.webm`} type="video/webm" />
+  動画をサポートしていないブラウザです。
           </video>
         </div>
         <div style={overlayStyle}></div>

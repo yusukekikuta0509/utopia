@@ -59,7 +59,7 @@ export default function LogoDesign() {
     opacity: 0.6,
   };
 
-  // オーバーレイのスタイル（ぼかしなし）
+  // 既存のオーバーレイ（黒）スタイル
   const overlayStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
@@ -68,6 +68,17 @@ export default function LogoDesign() {
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     zIndex: 2,
+  };
+
+  // 薄い白色のオーバーレイ（追加）スタイル
+  const whiteOverlayStyle: CSSProperties = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    zIndex: 2.5,
   };
 
   // 中央コンテンツ配置用コンテナのスタイル
@@ -98,6 +109,7 @@ export default function LogoDesign() {
     letterSpacing: '0.2em',
     marginBottom: '1.5rem',
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
+    color: '#ffffff',
   };
 
   // 説明文のスタイル
@@ -112,9 +124,10 @@ export default function LogoDesign() {
       {/* 背景動画 */}
       <div style={videoContainerStyle}>
         <video ref={videoRef} loop muted playsInline style={videoStyle}>
-          <source src='/videos/water.mp4' type='video/mp4' />
+          <source src='/videos/white.mp4' type='video/mp4' />
         </video>
         <div style={overlayStyle}></div>
+        <div style={whiteOverlayStyle}></div>
       </div>
       
       {/* 中央コンテンツ */}
@@ -133,7 +146,7 @@ export default function LogoDesign() {
               src='/images/logo.PNG'
               alt='UTOPIA Logo Design'
               width={300}
-              height={300}
+              height={380}
               style={{ display: 'block', margin: '0 auto', filter: 'grayscale(100%)' }}
             />
           </div>
@@ -150,3 +163,5 @@ export default function LogoDesign() {
     </section>
   );
 }
+
+// Removed redundant export default statement
