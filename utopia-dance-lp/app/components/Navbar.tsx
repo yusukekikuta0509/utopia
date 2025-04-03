@@ -272,7 +272,7 @@ export default function Navbar() {
                 custom={3}
                 variants={itemVariants}
               >
-                {concertGenres.map((genre, i) => {
+                {concertGenres.map((genre) => {
                   if (genre.id === 'break') {
                     // 休憩はリンクでなくテキストのみ
                     return (
