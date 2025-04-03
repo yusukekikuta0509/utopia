@@ -6,6 +6,7 @@ import DanceGenres, { DanceGenreProps } from '@/components/DanceGenre';
 import SpecialThanks from '@/components/SpecialThanks';
 import MemberList from '@/components/MemberList';
 import Footer from '@/components/Footer';
+import Navbar from '@/components/Navbar';
 
 export default function Home() {
   const genres: DanceGenreProps[] = [
@@ -640,6 +641,8 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-black text-white">
       {/* メインコンテンツ */}
+      {/* ヘッダー */}
+      <Navbar />
       <main className="flex-grow">
         {/* ここに HeroSection, DanceGenres などを配置 */}
         {/* 例 */}
@@ -651,8 +654,6 @@ export default function Home() {
         <MemberList />
       </main>
 
-      {/* フッター */}
-      <Footer />
     </div>
   );
 }

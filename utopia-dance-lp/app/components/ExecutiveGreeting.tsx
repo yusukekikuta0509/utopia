@@ -86,7 +86,7 @@ export default function ExecutiveGreeting() {
   };
 
   return (
-    <section style={sectionStyle} className="snap-section">
+    <section id="greeting" style={sectionStyle} className="snap-section">
       {/* 背景動画 */}
       <div style={videoContainerStyle}>
         <video

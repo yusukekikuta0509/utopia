@@ -87,11 +87,11 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
     zIndex: 1,
   };
 
+  // backdropFilter を削除
   const overlayStyle = {
     position: 'absolute' as const,
     inset: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    backdropFilter: 'blur(2px)',
     zIndex: 2,
   };
 
@@ -119,7 +119,7 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
     letterSpacing: '0.2em',
     marginBottom: '1.5rem',
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
-    color: '#fffff', // 発色させるための色指定（例：鮮やかなピンク）
+    color: '#ffffff', // 発色させるための色指定
   };
 
   const choreographerStyle = {
