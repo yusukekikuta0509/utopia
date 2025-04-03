@@ -200,7 +200,7 @@ export default function MemberList() {
           playsInline
           style={videoStyle}
         >
-          <source src="/videos/water.mp4" type="video/mp4" />
+          <source src="/videos/water-mobile.mp4" type="video/mp4" />
         </video>
         {/* オーバーレイ */}
         <div style={overlayStyle}></div>

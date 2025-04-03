@@ -119,7 +119,7 @@ export default function ExecutiveGreeting() {
           playsInline
           style={videoStyle}
         >
-          <source src="/videos/greeting.mp4" type="video/mp4" />
+          <source src="/videos/Greeting-mobile.mp4" type="video/mp4" />
         </video>
         <div style={overlayStyle}></div>
       </div>
