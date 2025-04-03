@@ -1,45 +1,66 @@
 'use client';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import React, { CSSProperties, useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 
 export default function LogoDesign() {
   const [loaded, setLoaded] = useState(false);
-  
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   useEffect(() => {
-    setLoaded(true);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (videoRef.current) {
+            if (entry.isIntersecting) {
+              videoRef.current.play();
+              setLoaded(true);
+            } else {
+              videoRef.current.pause();
+            }
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
   }, []);
-  
+
   // セクション全体のスタイル
-  const sectionStyle = {
+  const sectionStyle: CSSProperties = {
     position: 'relative',
     minHeight: '100vh',
     width: '100%',
     backgroundColor: '#000',
     color: '#fff',
     overflow: 'hidden',
-  } as CSSProperties;
+  };
 
   // 背景動画コンテナのスタイル
-  const videoContainerStyle = {
+  const videoContainerStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
     height: '100%',
     zIndex: 1,
-  } as CSSProperties;
+  };
 
   // 背景動画のスタイル
-  const videoStyle = {
+  const videoStyle: CSSProperties = {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
     opacity: 0.6,
-  }  as CSSProperties;
+  };
 
   // オーバーレイのスタイル（ぼかしなし）
-  const overlayStyle = {
+  const overlayStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -47,10 +68,10 @@ export default function LogoDesign() {
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     zIndex: 2,
-  } as CSSProperties;
+  };
 
   // 中央コンテンツ配置用コンテナのスタイル
-  const contentContainerStyle = {
+  const contentContainerStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -60,38 +81,37 @@ export default function LogoDesign() {
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 999,
-  } as CSSProperties;
+  };
 
   // コンテンツ全体のスタイル
-  const contentStyle = {
+  const contentStyle: CSSProperties = {
     textAlign: 'center',
     padding: '0 1rem',
     maxWidth: '32rem',
     width: '100%',
-  } as CSSProperties;
+  };
 
-  // タイトルのスタイル（UTOPIA のヒーローセクションに倣う）
-  const titleStyle = {
+  // タイトルのスタイル
+  const titleStyle: CSSProperties = {
     fontSize: 'clamp(2rem, 5vw, 4rem)',
     fontWeight: 'bold',
     letterSpacing: '0.2em',
     marginBottom: '1.5rem',
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
-  } as CSSProperties;
-
+  };
 
   // 説明文のスタイル
-  const paragraphStyle = {
+  const paragraphStyle: CSSProperties = {
     fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
     lineHeight: '1.6',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
-  }  as CSSProperties;
+  };
 
   return (
-    <section id="logo" style={sectionStyle}>
+    <section id="logo" ref={sectionRef} style={sectionStyle}>
       {/* 背景動画 */}
       <div style={videoContainerStyle}>
-        <video autoPlay loop muted playsInline style={videoStyle}>
+        <video ref={videoRef} loop muted playsInline style={videoStyle}>
           <source src='/videos/water.mp4' type='video/mp4' />
         </video>
         <div style={overlayStyle}></div>

@@ -1,15 +1,40 @@
 'use client';
 
-import React, { CSSProperties, useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function ExecutiveGreeting() {
   const [loaded, setLoaded] = useState(false);
-  
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (videoRef.current) {
+            if (entry.isIntersecting) {
+              videoRef.current.play();
+              // 最初にビューポートに入ったときのみテキストをフェードイン
+              if (!loaded) {
+                setLoaded(true);
+              }
+            } else {
+              videoRef.current.pause();
+            }
+          }
+        });
+      },
+      { threshold: 0.1 } // セクションの10%が表示されたら発火
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, [loaded]);
+
+  // インラインスタイル定義
   const sectionStyle: CSSProperties = {
     position: 'relative',
     minHeight: '100vh',
@@ -85,9 +110,15 @@ export default function ExecutiveGreeting() {
   };
 
   return (
-    <section id="greeting" style={sectionStyle} className="snap-section">
+    <section id="greeting" ref={sectionRef} style={sectionStyle} className="snap-section">
       <div style={videoContainerStyle}>
-        <video autoPlay loop muted playsInline style={videoStyle}>
+        <video
+          ref={videoRef}
+          loop
+          muted
+          playsInline
+          style={videoStyle}
+        >
           <source src="/videos/greeting.mp4" type="video/mp4" />
         </video>
         <div style={overlayStyle}></div>
@@ -110,9 +141,12 @@ export default function ExecutiveGreeting() {
             animate={{ opacity: loaded ? 1 : 0 }}
             transition={{ duration: 1, delay: 0.3 }}
           >
-            この度は私たちの公演「UTOPIA」にお越しいただき、誠にありがとうございます。
-            本公演では、様々なジャンルのダンスを通して、理想郷というテーマを表現していきます。
-            日常から離れ、ひと時の夢のような空間をお楽しみください。
+            この度はaka Wa.Se.Da. 16代目春公演『Utopia』にお越しいただき誠にありがとうございます。
+            本公演のタイトルである『Utopia』は『理想郷』という意味で、理想的な世界を意味します。
+            本公演の演目一つ一つが私たちの『理想』の作品であり、本公演が『理想郷』のような公演であることを表現しています。
+            そして、ダンスを通じて素敵なサークル員が集うaka Wa.Se.Da. が『理想郷』であり、これから新入生を含めて3代で新たな理想郷を作っていきたい、という願いも込めています。
+            16代・17代で作る初めての作品です。ご来場される皆様に楽しんで頂けるよう、サークル員一丸となって練習や準備に励んできました。
+            ご来場頂いた全ての皆様に公演を楽しんで頂けたら幸いです。<br />『 Utopia』を最後までお楽しみください。
           </motion.p>
           
           <motion.p
@@ -121,7 +155,9 @@ export default function ExecutiveGreeting() {
             animate={{ opacity: loaded ? 1 : 0 }}
             transition={{ duration: 1, delay: 0.6 }}
           >
-            代表 ○○○○
+            代表　松川華菜
+            <br />副代表　田口玲　水野天翔　宮川梨沙
+            <br />会計　藤田葉月
           </motion.p>
         </div>
       </div>

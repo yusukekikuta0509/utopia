@@ -1,16 +1,11 @@
 'use client';
-
 import { motion } from 'framer-motion';
-import React, { CSSProperties, useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState, useRef } from 'react';
 
 export default function MemberList() {
   const [loaded, setLoaded] = useState(false);
   const [showMembers, setShowMembers] = useState(false);
   const [activeGeneration, setActiveGeneration] = useState('16th');
-  
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
 
   // メンバー名簿のデータ（代別）
   const members = {
@@ -44,33 +39,57 @@ export default function MemberList() {
     ]
   };
 
-  // インラインスタイルを多用して外部CSSの影響を受けにくくする
-  const sectionStyle = {
+  // Intersection Observer で動画の再生制御を行うための ref
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (videoRef.current) {
+            if (entry.isIntersecting) {
+              videoRef.current.play();
+              if (!loaded) setLoaded(true);
+            } else {
+              videoRef.current.pause();
+            }
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, [loaded]);
+
+  // インラインスタイル
+  const sectionStyle: CSSProperties = {
     position: 'relative',
     minHeight: '100vh',
     width: '100%',
     backgroundColor: '#000',
     color: '#fff',
     overflow: 'hidden',
-  } as CSSProperties;
+  };
 
-  const videoContainerStyle = {
+  const videoContainerStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
     height: '100%',
     zIndex: 1,
-  } as CSSProperties;
+  };
 
-  const videoStyle = {
+  const videoStyle: CSSProperties = {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
     opacity: 0.6,
-  } as CSSProperties;
+  };
 
-  const overlayStyle = {
+  const overlayStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -78,9 +97,9 @@ export default function MemberList() {
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     zIndex: 2,
-  } as CSSProperties;
+  };
 
-  const contentContainerStyle = {
+  const contentContainerStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -90,17 +109,17 @@ export default function MemberList() {
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 999,
-  }  as CSSProperties;
+  };
 
-  const contentStyle = {
+  const contentStyle: CSSProperties = {
     textAlign: 'center',
     padding: '0 1rem',
     maxWidth: showMembers ? '80%' : '32rem',
     width: '100%',
     transition: 'max-width 0.5s ease',
-  } as CSSProperties;
+  };
 
-  const titleStyle = {
+  const titleStyle: CSSProperties = {
     fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
     fontWeight: 'bold',
     letterSpacing: '0.2em',
@@ -108,9 +127,9 @@ export default function MemberList() {
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
     paddingBottom: '0.5rem',
     borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
-  } as CSSProperties;
+  };
 
-  const buttonStyle = {
+  const buttonStyle: CSSProperties = {
     padding: '0.75rem 2rem',
     borderWidth: '1px',
     borderStyle: 'solid',
@@ -119,23 +138,23 @@ export default function MemberList() {
     transition: 'all 0.3s ease',
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     display: 'inline-block',
-  } as CSSProperties;
+  };
 
-  const membersContainerStyle = {
+  const membersContainerStyle: CSSProperties = {
     marginTop: '2rem',
     maxHeight: '60vh',
     overflowY: 'auto',
     padding: '1rem',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: '4px',
-  } as CSSProperties;
+  };
 
-  const tabContainerStyle = {
+  const tabContainerStyle: CSSProperties = {
     display: 'flex',
     justifyContent: 'center',
     gap: '1rem',
     marginBottom: '1.5rem',
-  } as CSSProperties;
+  };
 
   const tabStyle = (isActive) => ({
     padding: '0.5rem 1.5rem',
@@ -146,36 +165,36 @@ export default function MemberList() {
     backgroundColor: isActive ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
     fontWeight: isActive ? 'bold' : 'normal',
     transition: 'all 0.3s ease',
-  }) as CSSProperties;
+  });
 
-  const generationTitleStyle = {
+  const generationTitleStyle: CSSProperties = {
     fontSize: 'clamp(1.25rem, 2vw, 1.75rem)',
     fontWeight: 'bold',
     marginBottom: '1rem',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
     color: 'rgba(255, 255, 255, 0.9)',
-  } as CSSProperties;
+  };
 
-  const memberGridStyle = {
+  const memberGridStyle: CSSProperties = {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
     gap: '1rem',
     textAlign: 'left',
-  } as CSSProperties;
+  };
 
-  const memberItemStyle = {
+  const memberItemStyle: CSSProperties = {
     fontSize: 'clamp(0.75rem, 1vw, 0.875rem)',
     padding: '0.5rem 0',
     borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
-  } as CSSProperties;
+  };
 
   return (
-    <section id="member-list" style={sectionStyle}>
+    <section id="member-list" ref={sectionRef} style={sectionStyle}>
       {/* 背景動画 */}
       <div style={videoContainerStyle}>
         <video
-          autoPlay
+          ref={videoRef}
           loop
           muted
           playsInline
@@ -183,7 +202,6 @@ export default function MemberList() {
         >
           <source src="/videos/water.mp4" type="video/mp4" />
         </video>
-        
         {/* オーバーレイ */}
         <div style={overlayStyle}></div>
       </div>
@@ -250,7 +268,7 @@ export default function MemberList() {
               </div>
               
               <motion.div 
-                style={{...buttonStyle, marginTop: '1.5rem'}}
+                style={{ ...buttonStyle, marginTop: '1.5rem' }}
                 whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setShowMembers(false)}

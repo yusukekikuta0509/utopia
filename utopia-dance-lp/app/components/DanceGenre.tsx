@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import React, { CSSProperties, useEffect, useState, useRef } from 'react';
+import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 
 export interface DanceGenreProps {
   id: string;
@@ -28,23 +28,35 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
   const safeName = name || 'default';
   const [loaded, setLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    setLoaded(true);
-
-    // 動画読み込みエラーのチェック
-    if (videoRef.current) {
-      videoRef.current.addEventListener('error', (e) => {
-        console.error('Video loading error:', e);
-      });
-      videoRef.current.addEventListener('loadeddata', () => {
-        console.log('Video loaded successfully');
-      });
-    }
-  }, []);
+  const sectionRef = useRef<HTMLElement>(null);
 
   // performers を4人ごとに分割
-  const chunkedPerformers = chunkArray(performers, 4);
+  const chunkedPerformers = chunkArray(performers, 8);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (videoRef.current) {
+            if (entry.isIntersecting) {
+              videoRef.current.play();
+              if (!loaded) {
+                setLoaded(true);
+              }
+            } else {
+              videoRef.current.pause();
+            }
+          }
+        });
+      },
+      { threshold: 0.1 } // セクションの10%が表示されたら発火
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, [loaded]);
 
   // インラインスタイル
   const sectionStyle: CSSProperties = {
@@ -141,13 +153,13 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
   };
 
   const performersLineStyle: CSSProperties = {
-    fontSize: 'clamp(0.9rem, 3vw, 1.25rem)',
+    fontSize: 'clamp(0.9rem, 3vw, 1rem)',
     marginBottom: '0.3rem',
     textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
   };
 
   return (
-    <section id={id} style={sectionStyle}>
+    <section id={id} ref={sectionRef} style={sectionStyle}>
       {/* 上半分：写真 */}
       <div style={topHalfStyle}>
         <div style={imageContainerStyle}>
@@ -167,7 +179,6 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
         <div style={videoContainerStyle}>
           <video
             ref={videoRef}
-            autoPlay
             loop
             muted
             playsInline
