@@ -1,10 +1,30 @@
-// next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  images: {
-    domains: ['placeholder.com'],
+import { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
+  async headers() {
+    return [
+      {
+        // /videos フォルダ内のファイルに対して1日キャッシュ
+        source: '/videos/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400',
+          },
+        ],
+      },
+      {
+        // /images フォルダ内のファイルに対して1日キャッシュ
+        source: '/images/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400',
+          },
+        ],
+      },
+    ];
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

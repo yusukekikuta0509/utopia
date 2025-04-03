@@ -8,7 +8,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // スクロールで navbar の背景や影を変更
+  // スクロールで Navbar の背景や影を変更
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -74,6 +74,7 @@ export default function Navbar() {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    overflowX: 'auto',
   };
 
   const logoStyle: CSSProperties = {
@@ -86,7 +87,7 @@ export default function Navbar() {
     zIndex: 1001,
   };
 
-  // フルスクリーンメニュー（半透明黒背景）
+  // フルスクリーンメニュー（半透明黒背景・縦スクロール対応）
   const fullscreenMenuStyle: CSSProperties = {
     position: 'fixed',
     top: 0,
@@ -101,7 +102,9 @@ export default function Navbar() {
     justifyContent: 'center',
     paddingTop: '4rem',
     paddingBottom: '4rem',
-    overflow: 'auto',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    WebkitOverflowScrolling: 'touch', // iOS スムーズスクロール対応
     zIndex: 1000,
   };
 
@@ -117,13 +120,13 @@ export default function Navbar() {
     transition: 'color 0.3s, transform 0.3s',
   };
 
-  // 幹部挨拶、ロゴデザイン、SpecialThanks は下線をつける
+  // 幹部挨拶、ロゴデザイン、SpecialThanks は下線付き
   const underlinedLinkStyle: CSSProperties = {
     ...fullscreenMenuItemStyle,
     textDecoration: 'underline',
   };
 
-  // 「公演ジャンル」の見出しにも下線を入れる
+  // 「公演ジャンル」の見出しにも下線
   const categoryTitleStyle: CSSProperties = {
     color: '#fff',
     fontSize: '1rem',
@@ -174,7 +177,7 @@ export default function Navbar() {
   // フルスクリーンメニュー内コンテナのスタイル
   const menuContainerStyle: CSSProperties = {
     width: '100%',
-    height: 'auto', // 内容に合わせて高さを可変に
+    height: 'auto',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -264,7 +267,7 @@ export default function Navbar() {
               
               {/* 公演ジャンル（各項目を縦に並べる） */}
               <motion.div custom={2} variants={itemVariants} style={categoryTitleStyle}>
-                公演ジャンル
+                ジャンル
               </motion.div>
               
               <motion.div
@@ -274,7 +277,6 @@ export default function Navbar() {
               >
                 {concertGenres.map((genre) => {
                   if (genre.id === 'break') {
-                    // 休憩はリンクでなくテキストのみ
                     return (
                       <div
                         key={genre.id}
