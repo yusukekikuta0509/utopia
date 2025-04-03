@@ -1,5 +1,4 @@
 'use client';
-
 import Link from 'next/link';
 import React, { CSSProperties, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -98,12 +97,12 @@ export default function Navbar() {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start', // ここを変更
-    paddingTop: '4rem', // 上部に余白を確保
+    justifyContent: 'flex-start', // 上から順に並べる
+    paddingTop: '4rem',
     paddingBottom: '4rem',
-    overflowY: 'auto',
+    overflowY: 'scroll',  // ここを 'scroll' に変更
     overflowX: 'hidden',
-    WebkitOverflowScrolling: 'touch', // iOS スムーズスクロール対応
+    WebkitOverflowScrolling: 'touch', // iOS 対応
     zIndex: 1000,
   };
 
@@ -323,55 +322,65 @@ export default function Navbar() {
               </motion.div>
               
               <motion.div
-                    style={{ display: 'flex', gap: '1.5rem', marginTop: '0.5rem' }}
-                    custom={8}
-                    variants={itemVariants}
-                    >
-                    {/* Twitter → X アイコンに変更 */}
-                    <Link 
-                        href="https://x.com/akaWaSeDa2"
-                        style={{ color: '#fff' }}
-                        onClick={() => setIsOpen(false)}
-                    >
-                        <svg width="32" height="32" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="white"/>
-                        </svg>
-                    </Link>
-                    
-                    {/* Instagram（そのまま） */}
-                    <Link 
-                        href="https://www.instagram.com/aka_waseda?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-                        style={{ color: '#fff' }}
-                        onClick={() => setIsOpen(false)}
-                    >
-                        <svg width="32" height="32" fill="white" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.054 1.97.24 2.43.403a4.92 4.92 0 011.675 1.095 4.92 4.92 0 011.095 1.675c.163.46.35 1.26.403 2.43.058 1.266.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.054 1.17-.24 1.97-.403 2.43a4.92 4.92 0 01-1.095 1.675 4.92 4.92 0 01-1.675 1.095c-.46.163-1.26.35-2.43.403-1.266.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.054-1.97-.24-2.43-.403a4.92 4.92 0 01-1.675-1.095 4.92 4.92 0 01-1.095-1.675c-.163-.46-.35-1.26-.403-2.43C2.175 15.747 2.163 15.368 2.163 12s.012-3.584.07-4.85c.054-1.17.24-1.97.403-2.43a4.92 4.92 0 011.095-1.675A4.92 4.92 0 015.326 2.636c.46-.163 1.26-.35 2.43-.403C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.736 0 8.332.012 7.052.07 5.78.128 4.802.308 4.042.59a6.875 6.875 0 00-2.5 1.634A6.875 6.875 0 00.59 4.042c-.282.76-.462 1.738-.52 3.01C.012 8.332 0 8.736 0 12c0 3.264.012 3.668.07 4.948.058 1.272.238 2.25.52 3.01a6.875 6.875 0 001.634 2.5 6.875 6.875 0 002.5 1.634c.76.282 1.738.462 3.01.52 1.28.058 1.684.07 4.948.07s3.668-.012 4.948-.07c1.272-.058 2.25-.238 3.01-.52a6.875 6.875 0 002.5-1.634 6.875 6.875 0 001.634-2.5c.282-.76.462-1.738.52-3.01.058-1.28.07-1.684.07-4.948s-.012-3.668-.07-4.948c-.058-1.272-.238-2.25-.52-3.01a6.875 6.875 0 00-1.634-2.5A6.875 6.875 0 0019.958.59c-.76-.282-1.738-.462-3.01-.52C15.668.012 15.264 0 12 0z" />
-                        <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8z" />
-                        <circle cx="18.406" cy="5.594" r="1.44" />
-                        </svg>
-                    </Link>
-                    
-                    {/* YouTube アイコン（復活） */}
-                    <Link 
-                        href="www.youtube.com/@akaWaSeDa2023" 
-                        style={{ color: '#fff' }}
-                        onClick={() => setIsOpen(false)}
-                    >
-                        <svg width="32" height="32" fill="white" viewBox="0 0 24 24" aria-hidden="true">
-                        <path 
-                            fillRule="evenodd" 
-                            d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418Z" 
-                            clipRule="evenodd" 
-                        />
-                        <path 
-                            fillRule="evenodd" 
-                            d="M15.194 12 10 15V9l5.194 3Z" 
-                            clipRule="evenodd" 
-                            fill="black" 
-                        />
-                        </svg>
-                    </Link>
-                    </motion.div>
+                style={{ display: 'flex', gap: '1.5rem', marginTop: '0.5rem' }}
+                custom={8}
+                variants={itemVariants}
+              >
+                {/* Twitter → X アイコン */}
+                <Link 
+                  href="https://x.com/akaWaSeDa2"
+                  style={{ color: '#fff' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <svg width="32" height="32" fill="none" stroke="white" viewBox="0 0 24 24" aria-hidden="true">
+                    <path 
+                      d="M6 18L18 6M6 6l12 12" 
+                      stroke="white" 
+                      strokeWidth={2} 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                    />
+                  </svg>
+                </Link>
+                
+                {/* Instagram */}
+                <Link 
+                  href="https://www.instagram.com/aka_waseda?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                  style={{ color: '#fff' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <svg width="32" height="32" fill="white" viewBox="0 0 24 24" aria-hidden="true">
+                    <path 
+                      fillRule="evenodd" 
+                      d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06s-3.584-.012-4.85-.07c-1.17-.054-1.97-.24-2.43-.403a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.163-.46-.35-1.26-.403-2.43C2.175 15.747 2.163 15.368 2.163 12s.012-3.584.07-4.85c.054-1.17.24-1.97.403-2.43a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.326 2.636c.46-.163 1.26-.35 2.43-.403C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.736 0 8.332.012 7.052.07 5.78.128 4.802.308 4.042.59a6.875 6.875 0 00-2.5 1.634A6.875 6.875 0 00.59 4.042c-.282.76-.462 1.738-.52 3.01C.012 8.332 0 8.736 0 12c0 3.264.012 3.668.07 4.948.058 1.272.238 2.25.52 3.01a6.875 6.875 0 001.634 2.5 6.875 6.875 0 002.5 1.634c.76.282 1.738.462 3.01.52 1.28.058 1.684.07 4.948.07s3.668-.012 4.948-.07c1.272-.058 2.25-.238 3.01-.52a6.875 6.875 0 002.5-1.634 6.875 6.875 0 001.634-2.5c.282-.76.462-1.738.52-3.01.058-1.28.07-1.684.07-4.948s-.012-3.668-.07-4.948c-.058-1.272-.238-2.25-.52-3.01a6.875 6.875 0 00-1.634-2.5A6.875 6.875 0 0019.958.59c-.76-.282-1.738-.462-3.01-.52C15.668.012 15.264 0 12 0z" 
+                      clipRule="evenodd" 
+                    />
+                    <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8z" />
+                    <circle cx="18.406" cy="5.594" r="1.44" />
+                  </svg>
+                </Link>
+                
+                {/* YouTube アイコン（復活） */}
+                <Link 
+                  href="https://www.youtube.com/@akaWaSeDa2023" 
+                  style={{ color: '#fff' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <svg width="32" height="32" fill="white" viewBox="0 0 24 24" aria-hidden="true">
+                    <path 
+                      fillRule="evenodd" 
+                      d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418Z" 
+                      clipRule="evenodd" 
+                    />
+                    <path 
+                      fillRule="evenodd" 
+                      d="M15.194 12 10 15V9l5.194 3Z" 
+                      clipRule="evenodd" 
+                      fill="black" 
+                    />
+                  </svg>
+                </Link>
+              </motion.div>
               
               {/* コピーライト */}
               <motion.div 
