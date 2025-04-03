@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 
 export default function HeroSection() {
   const [loaded, setLoaded] = useState(false);
@@ -18,8 +18,8 @@ export default function HeroSection() {
     backgroundColor: '#000',
     color: '#fff',
     overflow: 'hidden',
-  };
-
+  } as CSSProperties;
+  
   const videoContainerStyle = {
     position: 'absolute',
     top: 0,
@@ -27,14 +27,14 @@ export default function HeroSection() {
     width: '100%',
     height: '100%',
     zIndex: 1,
-  };
+  } as CSSProperties;
 
   const videoStyle = {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
     opacity: 0.6,
-  };
+  } as CSSProperties;
 
   const overlayStyle = {
     position: 'absolute',
@@ -44,7 +44,7 @@ export default function HeroSection() {
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     zIndex: 2,
-  };
+  } as CSSProperties;
 
   const contentContainerStyle = {
     position: 'absolute',
@@ -56,14 +56,14 @@ export default function HeroSection() {
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 999, // 非常に高い値を設定
-  };
+  }   as CSSProperties;
 
   const contentStyle = {
     textAlign: 'center',
     padding: '0 1rem',
     maxWidth: '32rem',
     width: '100%',
-  };
+  } as CSSProperties;
 
   const titleStyle = {
     fontSize: 'clamp(2rem, 5vw, 4rem)',
@@ -71,19 +71,19 @@ export default function HeroSection() {
     letterSpacing: '0.2em',
     marginBottom: '1.5rem',
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
-  };
+  } as CSSProperties;
 
   const subtitleStyle = {
     fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
     marginBottom: '1.5rem',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
-  };
+  } as CSSProperties;
 
   const infoStyle = {
     fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
     marginTop: '1.5rem',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
-  };
+  }  as CSSProperties;
 
   return (
     <section style={sectionStyle}>

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 
 export default function MemberList() {
   const [loaded, setLoaded] = useState(false);
@@ -52,7 +52,7 @@ export default function MemberList() {
     backgroundColor: '#000',
     color: '#fff',
     overflow: 'hidden',
-  };
+  } as CSSProperties;
 
   const videoContainerStyle = {
     position: 'absolute',
@@ -61,14 +61,14 @@ export default function MemberList() {
     width: '100%',
     height: '100%',
     zIndex: 1,
-  };
+  } as CSSProperties;
 
   const videoStyle = {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
     opacity: 0.6,
-  };
+  } as CSSProperties;
 
   const overlayStyle = {
     position: 'absolute',
@@ -78,7 +78,7 @@ export default function MemberList() {
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     zIndex: 2,
-  };
+  } as CSSProperties;
 
   const contentContainerStyle = {
     position: 'absolute',
@@ -90,7 +90,7 @@ export default function MemberList() {
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 999,
-  };
+  }  as CSSProperties;
 
   const contentStyle = {
     textAlign: 'center',
@@ -98,7 +98,7 @@ export default function MemberList() {
     maxWidth: showMembers ? '80%' : '32rem',
     width: '100%',
     transition: 'max-width 0.5s ease',
-  };
+  } as CSSProperties;
 
   const titleStyle = {
     fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
@@ -108,7 +108,7 @@ export default function MemberList() {
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
     paddingBottom: '0.5rem',
     borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
-  };
+  } as CSSProperties;
 
   const buttonStyle = {
     padding: '0.75rem 2rem',
@@ -119,7 +119,7 @@ export default function MemberList() {
     transition: 'all 0.3s ease',
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     display: 'inline-block',
-  };
+  } as CSSProperties;
 
   const membersContainerStyle = {
     marginTop: '2rem',
@@ -128,14 +128,14 @@ export default function MemberList() {
     padding: '1rem',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: '4px',
-  };
+  } as CSSProperties;
 
   const tabContainerStyle = {
     display: 'flex',
     justifyContent: 'center',
     gap: '1rem',
     marginBottom: '1.5rem',
-  };
+  } as CSSProperties;
 
   const tabStyle = (isActive) => ({
     padding: '0.5rem 1.5rem',
@@ -146,7 +146,7 @@ export default function MemberList() {
     backgroundColor: isActive ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
     fontWeight: isActive ? 'bold' : 'normal',
     transition: 'all 0.3s ease',
-  });
+  }) as CSSProperties;
 
   const generationTitleStyle = {
     fontSize: 'clamp(1.25rem, 2vw, 1.75rem)',
@@ -154,21 +154,21 @@ export default function MemberList() {
     marginBottom: '1rem',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
     color: 'rgba(255, 255, 255, 0.9)',
-  };
+  } as CSSProperties;
 
   const memberGridStyle = {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
     gap: '1rem',
     textAlign: 'left',
-  };
+  } as CSSProperties;
 
   const memberItemStyle = {
     fontSize: 'clamp(0.75rem, 1vw, 0.875rem)',
     padding: '0.5rem 0',
     borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
-  };
+  } as CSSProperties;
 
   return (
     <section id="member-list" style={sectionStyle}>

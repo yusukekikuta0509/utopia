@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 
 export default function LogoDesign() {
   const [loaded, setLoaded] = useState(false);
@@ -18,7 +18,7 @@ export default function LogoDesign() {
     backgroundColor: '#000',
     color: '#fff',
     overflow: 'hidden',
-  };
+  } as CSSProperties;
 
   // 背景動画コンテナのスタイル
   const videoContainerStyle = {
@@ -28,7 +28,7 @@ export default function LogoDesign() {
     width: '100%',
     height: '100%',
     zIndex: 1,
-  };
+  } as CSSProperties;
 
   // 背景動画のスタイル
   const videoStyle = {
@@ -36,7 +36,7 @@ export default function LogoDesign() {
     height: '100%',
     objectFit: 'cover',
     opacity: 0.6,
-  };
+  }  as CSSProperties;
 
   // オーバーレイのスタイル（ぼかしなし）
   const overlayStyle = {
@@ -47,7 +47,7 @@ export default function LogoDesign() {
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     zIndex: 2,
-  };
+  } as CSSProperties;
 
   // 中央コンテンツ配置用コンテナのスタイル
   const contentContainerStyle = {
@@ -60,7 +60,7 @@ export default function LogoDesign() {
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 999,
-  };
+  } as CSSProperties;
 
   // コンテンツ全体のスタイル
   const contentStyle = {
@@ -68,7 +68,7 @@ export default function LogoDesign() {
     padding: '0 1rem',
     maxWidth: '32rem',
     width: '100%',
-  };
+  } as CSSProperties;
 
   // タイトルのスタイル（UTOPIA のヒーローセクションに倣う）
   const titleStyle = {
@@ -77,21 +77,15 @@ export default function LogoDesign() {
     letterSpacing: '0.2em',
     marginBottom: '1.5rem',
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
-  };
+  } as CSSProperties;
 
-  // サブタイトルのスタイル
-  const subtitleStyle = {
-    fontSize: 'clamp(1rem, 3vw, 1.5rem)',
-    marginBottom: '1rem',
-    textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
-  };
 
   // 説明文のスタイル
   const paragraphStyle = {
     fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
     lineHeight: '1.6',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
-  };
+  }  as CSSProperties;
 
   return (
     <section id="logo" style={sectionStyle}>

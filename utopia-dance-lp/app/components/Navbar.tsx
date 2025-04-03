@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
@@ -71,7 +71,7 @@ export default function Navbar() {
     backdropFilter: 'blur(8px)',
     boxShadow: scrolled ? '0 4px 6px rgba(0, 0, 0, 0.1)' : 'none',
     transition: 'all 0.3s ease-in-out',
-  };
+  } as CSSProperties;
 
   const navContainerStyle = {
     maxWidth: '1280px',
@@ -80,7 +80,7 @@ export default function Navbar() {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-  };
+  } as CSSProperties;
 
   const logoStyle = {
     fontSize: '1.5rem',
@@ -90,7 +90,7 @@ export default function Navbar() {
     textDecoration: 'none',
     textShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
     zIndex: 1001, // ロゴをメニュー上に表示
-  };
+  } as CSSProperties;
 
   // メニュー背景も半透明に変更
   const fullscreenMenuStyle = {
@@ -107,7 +107,7 @@ export default function Navbar() {
     padding: '2rem',
     overflow: 'auto',
     zIndex: 1000,
-  };
+  } as CSSProperties;
 
   const fullscreenMenuItemStyle = {
     color: '#fff',
@@ -120,7 +120,7 @@ export default function Navbar() {
     letterSpacing: '0.1em',
     position: 'relative',
     transition: 'color 0.3s, transform 0.3s',
-  };
+  } as CSSProperties;
 
   const categoryTitleStyle = {
     color: '#fff',
@@ -132,7 +132,7 @@ export default function Navbar() {
     letterSpacing: '0.2em',
     opacity: 0.6,
     textTransform: 'uppercase',
-  };
+  } as CSSProperties;
 
   // ハンバーガーメニューのスタイル強化 - 視認性改善
   const hamburgerStyle = {
@@ -150,8 +150,8 @@ export default function Navbar() {
     textShadow: '0 0 10px rgba(255, 255, 255, 0.3)', // ホワイトグロー効果
     filter: 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.8))', // グロー効果を強化
     backgroundColor: 'rgba(0, 0, 0, 0.3)', // 背景を追加して視認性向上
-    borderRadius: '50%', // 円形に
-  };
+    borderRadius: '80%', // 円形に
+  } as CSSProperties;
 
   // コンサートジャンルの項目
   const concertGenres = [
@@ -178,7 +178,7 @@ export default function Navbar() {
     justifyContent: 'center',
     alignItems: 'center',
     gap: '1.5rem',
-  };
+  } as CSSProperties;
 
   // セクション区切りライン
   const dividerStyle = {
@@ -186,14 +186,14 @@ export default function Navbar() {
     height: '1px',
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     margin: '1rem 0',
-  };
+  } as CSSProperties;
 
   return (
     <header style={navbarStyle}>
       <div style={navContainerStyle}>
         {/* Logo */}
         <Link href="/" style={logoStyle}>
-          UTOPIA
+          a.k.a Waseda
         </Link>
 
         {/* ハンバーガーメニュー - 視認性を強化 */}
@@ -273,7 +273,7 @@ export default function Navbar() {
               
               {/* グリッドから縦のフレックスに変更 */}
               <motion.div className="flex flex-col items-center" custom={3} variants={itemVariants}>
-                {concertGenres.map((genre, index) => (
+                {concertGenres.map((genre) => (
                   <Link 
                     key={genre.id} 
                     href={genre.href} 

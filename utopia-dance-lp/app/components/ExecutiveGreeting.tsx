@@ -1,7 +1,7 @@
 'use client';
 
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
 
 export default function ExecutiveGreeting() {
   const [loaded, setLoaded] = useState(false);
@@ -10,8 +10,7 @@ export default function ExecutiveGreeting() {
     setLoaded(true);
   }, []);
 
-  // インラインスタイルを多用して外部CSSの影響を受けにくくする
-  const sectionStyle = {
+  const sectionStyle: CSSProperties = {
     position: 'relative',
     minHeight: '100vh',
     width: '100%',
@@ -20,7 +19,7 @@ export default function ExecutiveGreeting() {
     overflow: 'hidden',
   };
 
-  const videoContainerStyle = {
+  const videoContainerStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -29,14 +28,14 @@ export default function ExecutiveGreeting() {
     zIndex: 1,
   };
 
-  const videoStyle = {
+  const videoStyle: CSSProperties = {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
     opacity: 0.6,
   };
 
-  const overlayStyle = {
+  const overlayStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -46,7 +45,7 @@ export default function ExecutiveGreeting() {
     zIndex: 2,
   };
 
-  const contentContainerStyle = {
+  const contentContainerStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -55,16 +54,16 @@ export default function ExecutiveGreeting() {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 999, // 非常に高い値を設定
+    zIndex: 999,
   };
 
-  const contentStyle = {
+  const contentStyle: CSSProperties = {
     padding: '0 1rem',
     maxWidth: '32rem',
     width: '100%',
   };
 
-  const titleStyle = {
+  const titleStyle: CSSProperties = {
     fontSize: 'clamp(1.5rem, 3vw, 2rem)',
     fontWeight: 'bold',
     marginBottom: '1.5rem',
@@ -72,14 +71,14 @@ export default function ExecutiveGreeting() {
     borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
   };
 
-  const paragraphStyle = {
+  const paragraphStyle: CSSProperties = {
     fontSize: 'clamp(0.875rem, 2vw, 1rem)',
     lineHeight: 1.7,
     marginBottom: '1.5rem',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
   };
 
-  const signatureStyle = {
+  const signatureStyle: CSSProperties = {
     fontSize: 'clamp(0.875rem, 2vw, 1rem)',
     textAlign: 'right',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
@@ -87,23 +86,13 @@ export default function ExecutiveGreeting() {
 
   return (
     <section id="greeting" style={sectionStyle} className="snap-section">
-      {/* 背景動画 */}
       <div style={videoContainerStyle}>
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={videoStyle}
-        >
+        <video autoPlay loop muted playsInline style={videoStyle}>
           <source src="/videos/greeting.mp4" type="video/mp4" />
         </video>
-        
-        {/* オーバーレイ */}
         <div style={overlayStyle}></div>
       </div>
       
-      {/* テキストコンテンツ */}
       <div style={contentContainerStyle}>
         <div style={contentStyle}>
           <motion.h2
@@ -122,8 +111,8 @@ export default function ExecutiveGreeting() {
             transition={{ duration: 1, delay: 0.3 }}
           >
             この度は私たちの公演「UTOPIA」にお越しいただき、誠にありがとうございます。
-            本公演では、様々なジャンルのダンスを通して、理想郷（ユートピア）というテーマを
-            表現していきます。日常から離れ、ひと時の夢のような空間をお楽しみください。
+            本公演では、様々なジャンルのダンスを通して、理想郷というテーマを表現していきます。
+            日常から離れ、ひと時の夢のような空間をお楽しみください。
           </motion.p>
           
           <motion.p

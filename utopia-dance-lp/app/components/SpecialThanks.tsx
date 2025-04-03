@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 
 export default function SpecialThanks() {
   const [loaded, setLoaded] = useState(false);
@@ -18,7 +18,7 @@ export default function SpecialThanks() {
     backgroundColor: '#000',
     color: '#fff',
     overflow: 'hidden',
-  };
+  } as CSSProperties;
 
   const videoContainerStyle = {
     position: 'absolute',
@@ -27,14 +27,14 @@ export default function SpecialThanks() {
     width: '100%',
     height: '100%',
     zIndex: 1,
-  };
+  } as CSSProperties;
 
   const videoStyle = {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
     opacity: 0.6,
-  };
+  } as CSSProperties;
 
   const overlayStyle = {
     position: 'absolute',
@@ -44,7 +44,7 @@ export default function SpecialThanks() {
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     zIndex: 2,
-  };
+  } as CSSProperties;
 
   const contentContainerStyle = {
     position: 'absolute',
@@ -56,14 +56,14 @@ export default function SpecialThanks() {
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 999,
-  };
+  } as CSSProperties;
 
   const contentStyle = {
     textAlign: 'center',
     padding: '0 1rem',
     maxWidth: '32rem',
     width: '100%',
-  };
+  } as CSSProperties;
 
   const titleStyle = {
     fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
@@ -73,24 +73,24 @@ export default function SpecialThanks() {
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
     paddingBottom: '0.5rem',
     borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
-  };
+  } as CSSProperties;
 
   const paragraphStyle = {
     fontSize: 'clamp(0.875rem, 1.5vw, 1rem)',
     marginBottom: '1.5rem',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
     lineHeight: '1.6',
-  };
+  } as CSSProperties;
 
   const listContainerStyle = {
     marginTop: '1.5rem',
-  };
+  } as CSSProperties;
 
   const listItemStyle = {
     fontSize: 'clamp(0.875rem, 1.5vw, 1rem)',
     marginBottom: '0.5rem',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
-  };
+  } as CSSProperties;
 
   return (
     <section id="special-thanks" style={sectionStyle}>

@@ -2,10 +2,9 @@
 import HeroSection from '@/components/HeroSection';
 import ExecutiveGreeting from '@/components/ExecutiveGreeting';
 import LogoDesign from '@/components/LogoDesign';
-import DanceGenres, { DanceGenreProps } from '@/components/DanceGenre';
+import DanceGenres, { DanceGenreProps } from '@/components/DanceGenres';
 import SpecialThanks from '@/components/SpecialThanks';
 import MemberList from '@/components/MemberList';
-import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 
 export default function Home() {
