@@ -563,6 +563,7 @@ export default function Home() {
       choreographer: '髙崎千春　山脇蒼翔　吉田実桜',
       performers: [
        '荒木朱華',
+       '伊藤翼',
       '岩脇朱音',
       '菅野達也',
       '髙﨑千春',
@@ -578,7 +579,6 @@ export default function Home() {
       '吉田玲',
       '池内優太',
       '池田理玖',
-      '伊藤翼',
       '井本真城',
       '江川創',
       '大北壮太',
