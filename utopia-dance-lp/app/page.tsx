@@ -292,7 +292,7 @@ export default function Home() {
     },
     {
       id: 'M6',
-      name: 'R&B',
+      name: 'RandB',
       choreographer: '岡安理乃',
       performers: [
         '荒木朱華',
