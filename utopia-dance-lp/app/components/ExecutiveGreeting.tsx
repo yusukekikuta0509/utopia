@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 
 export default function ExecutiveGreeting() {
   const [loaded, setLoaded] = useState(false);
+  const [showSurvey, setShowSurvey] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -109,6 +110,138 @@ export default function ExecutiveGreeting() {
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
   };
 
+  // アンケートボタンとモーダルのスタイル
+  const surveyButtonStyle: CSSProperties = {
+    display: 'inline-block',
+    marginTop: '2rem',
+    padding: '0.75rem 1.5rem',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    color: '#fff',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    borderRadius: '4px',
+    fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+  };
+
+  // モーダル全体のコンテナスタイル - 改良
+  const surveyModalContainerStyle: CSSProperties = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(10, 10, 10, 0.9)',
+    display: showSurvey ? 'flex' : 'none',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000,
+    backdropFilter: 'blur(12px)',
+    padding: '20px',
+  };
+
+  // モーダル本体のスタイル - 改良
+  const surveyModalStyle: CSSProperties = {
+    width: '90%',
+    maxWidth: '800px',
+    height: 'auto',
+    maxHeight: '85vh',
+    backgroundColor: 'rgba(18, 18, 18, 0.95)',
+    borderRadius: '12px',
+    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
+    overflow: 'hidden',
+    position: 'relative',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    transition: 'all 0.3s ease',
+    display: 'flex',
+    flexDirection: 'column',
+  };
+
+  // モーダルヘッダーのスタイル - 改良
+  const surveyHeaderStyle: CSSProperties = {
+    padding: '1.25rem 1.5rem',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  };
+
+  // モーダルタイトルのスタイル - 改良
+  const surveyTitleStyle: CSSProperties = {
+    fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
+    fontWeight: 'bold',
+    margin: 0,
+    letterSpacing: '0.5px',
+    color: '#ffffff',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  };
+
+  // クローズボタンのスタイル - 改良
+  const closeButtonStyle: CSSProperties = {
+    background: 'rgba(255, 255, 255, 0.05)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    color: '#fff',
+    fontSize: '1rem',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '36px',
+    height: '36px',
+    borderRadius: '50%',
+    transition: 'all 0.2s ease',
+    outline: 'none',
+  };
+
+  // フォーム表示エリアのスタイル - 改良
+  const surveyContentStyle: CSSProperties = {
+    padding: '0',
+    overflow: 'hidden',
+    position: 'relative',
+    flexGrow: 1,
+    height: 'calc(85vh - 84px)',
+    backgroundColor: 'rgba(255, 255, 255, 0.02)',
+  };
+
+  // iframeスタイルの改良
+  const iframeStyle: CSSProperties = {
+    width: '100%',
+    height: '100%',
+    border: 'none',
+    background: '#fff',
+    borderRadius: '0 0 12px 12px',
+  };
+
+  // モーダルのロード状態を管理
+  const [iframeLoading, setIframeLoading] = useState(true);
+
+  // ローディングインジケーターのスタイル
+  const loadingOverlayStyle: CSSProperties = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    display: iframeLoading ? 'flex' : 'none',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(18, 18, 18, 0.9)',
+    color: '#fff',
+    zIndex: 5,
+    borderRadius: '0 0 12px 12px',
+  };
+
+  // アイコン用のスタイル
+  const iconStyle: CSSProperties = {
+    marginRight: '8px',
+    opacity: 0.8,
+  };
+
   return (
     <section id="greeting" ref={sectionRef} style={sectionStyle} className="snap-section">
       <div style={videoContainerStyle}>
@@ -159,8 +292,98 @@ export default function ExecutiveGreeting() {
             <br />副代表　田口玲　水野天翔　宮川梨沙
             <br />会計　藤田葉月
           </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: loaded ? 1 : 0 }}
+            transition={{ duration: 1, delay: 0.9 }}
+            style={{ textAlign: 'center' }}
+          >
+            <button 
+              style={surveyButtonStyle} 
+              onClick={() => setShowSurvey(true)}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+              }}
+            >
+              アンケートにご協力ください
+            </button>
+          </motion.div>
         </div>
       </div>
+      
+      {/* 改良版アンケートモーダル */}
+      <motion.div 
+        style={surveyModalContainerStyle}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showSurvey ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        onClick={(e) => {
+          // モーダル背景をクリックした時に閉じる
+          if (e.target === e.currentTarget) {
+            setShowSurvey(false);
+          }
+        }}
+      >
+        <motion.div 
+          style={surveyModalStyle}
+          initial={{ scale: 0.9, y: 20 }}
+          animate={{ scale: showSurvey ? 1 : 0.9, y: showSurvey ? 0 : 20 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        >
+          <div style={surveyHeaderStyle}>
+            <h3 style={surveyTitleStyle}>
+              <svg style={iconStyle} width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+              公演アンケート
+            </h3>
+            <button 
+              style={closeButtonStyle} 
+              onClick={() => setShowSurvey(false)}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+              }}
+            >
+              ×
+            </button>
+          </div>
+          <div style={surveyContentStyle}>
+            <div style={loadingOverlayStyle}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ marginBottom: '10px' }}>
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ animation: 'spin 1.5s linear infinite' }}>
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                  </svg>
+                  <style>{`
+                    @keyframes spin {
+                      0% { transform: rotate(0deg); }
+                      100% { transform: rotate(360deg); }
+                    }
+                  `}</style>
+                </div>
+                <div>アンケート読み込み中...</div>
+              </div>
+            </div>
+            <iframe 
+              src="https://docs.google.com/forms/d/e/1FAIpQLSf9wVc4q7boBjrbfDVzXPlCUjbb7qtZKazOndZj2uZhec1_Ew/viewform?embedded=true" 
+              style={iframeStyle}
+              title="アンケートフォーム"
+              onLoad={() => setIframeLoading(false)}
+            ></iframe>
+          </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

@@ -4,18 +4,27 @@
 import React from 'react';
 import DanceGenre, { DanceGenreProps } from './DanceGenre';
 
-interface DanceGenresProps {
-  genres: DanceGenreProps[];
+interface ConcertGenre {
+  id: string;
+  name: string;
+  href: string;
 }
 
-const DanceGenres: React.FC<DanceGenresProps> = ({ genres }) => {
+interface DanceGenresProps {
+  genres: DanceGenreProps[];
+  concertGenres?: ConcertGenre[]; // オプショナルとして追加
+}
+
+const DanceGenres: React.FC<DanceGenresProps> = ({ genres}) => {
   return (
-    <>
-      {genres.map((genre) => (
-        // 各 DanceGenre コンポーネントには、genre のプロパティが渡される
-        <DanceGenre key={genre.id} {...genre} />
-      ))}
-    </>
+    <div>
+      {/* 既存のレイアウト：各 DanceGenre をそのままレンダリング */}
+      <div>
+        {genres.map((genre) => (
+          <DanceGenre key={genre.id} {...genre} />
+        ))}
+      </div>
+    </div>
   );
 };
 

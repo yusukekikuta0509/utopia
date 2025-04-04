@@ -147,13 +147,13 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
   };
 
   const performersLabelStyle: CSSProperties = {
-    fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+    fontSize: 'clamp(0.875rem, 2vw, 0.5rem)',
     marginBottom: '0.5rem',
     textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
   };
 
   const performersLineStyle: CSSProperties = {
-    fontSize: 'clamp(0.9rem, 3vw, 1rem)',
+    fontSize: 'clamp(0.9rem, 3vw, 0.25rem)',
     marginBottom: '0.3rem',
     textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
   };
