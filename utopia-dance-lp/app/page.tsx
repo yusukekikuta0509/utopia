@@ -8,7 +8,7 @@ import DanceGenres, { DanceGenreProps } from '@/components/DanceGenres';
 import SpecialThanks from '@/components/SpecialThanks';
 import MemberList from '@/components/MemberList';
 import Navbar from '@/components/Navbar';
-import LoadingScreen from '@/components/LoadingScreen';
+
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
