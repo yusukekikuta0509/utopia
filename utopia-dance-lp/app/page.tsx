@@ -677,9 +677,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-black text-white">
-      {/* ローディング画面 */}
-      {isLoading && <LoadingScreen onLoadComplete={handleLoadComplete} />}
-
       {/* メインコンテンツ */}
       <div className={`transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
         <Navbar />

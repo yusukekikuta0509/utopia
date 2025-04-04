@@ -131,6 +131,7 @@ export default function PerformanceOrderSection() {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
+    alignItems: 'center',
     overflow: 'hidden',
     textDecoration: 'none',
   };

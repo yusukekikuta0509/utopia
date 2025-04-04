@@ -44,7 +44,7 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
   const sectionRef = useRef<HTMLElement>(null);
 
   // performers を 1 行あたり 7 人に調整
-  const chunkedPerformers = chunkArray(performers, 7);
+  const chunkedPerformers = chunkArray(performers, 6);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
