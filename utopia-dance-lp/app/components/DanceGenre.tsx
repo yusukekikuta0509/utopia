@@ -19,6 +19,13 @@ function chunkArray<T>(array: T[], chunkSize: number): T[][] {
   return result;
 }
 
+// 動画ファイルのパスを生成するヘルパー関数
+function getEncodedVideoPath(name: string, suffix: string = '', ext: string = 'mp4'): string {
+  // safeName はそのまま表示に使い、ファイルパス部分のみエンコード
+  const fileName = encodeURIComponent(name.toLowerCase());
+  return `/videos/${fileName}${suffix ? '-' + suffix : ''}.${ext}`;
+}
+
 const DanceGenre: React.FC<DanceGenreProps> = ({
   id,
   name,
@@ -30,7 +37,7 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // performers を4人ごとに分割
+  // performers を8人ごとに分割
   const chunkedPerformers = chunkArray(performers, 8);
 
   useEffect(() => {
@@ -190,12 +197,16 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
               display: 'block',
             }}
           >
-             {/* スマホ向け（幅767px以下）の動画 */}
-          <source src={`/videos/${safeName.toLowerCase()}-mobile.mp4`} type="video/mp4" media="(max-width: 767px)" />
-          {/* PC向けの動画 */}
-          <source src={`/videos/${safeName.toLowerCase()}.mp4`} type="video/mp4" />
-          <source src={`/videos/${safeName.toLowerCase()}.webm`} type="video/webm" />
-  動画をサポートしていないブラウザです。
+            {/* スマホ向け（幅767px以下）の動画 */}
+            <source
+              src={getEncodedVideoPath(safeName, 'mobile')}
+              type="video/mp4"
+              media="(max-width: 767px)"
+            />
+            {/* PC向けの動画 */}
+            <source src={getEncodedVideoPath(safeName)} type="video/mp4" />
+            <source src={getEncodedVideoPath(safeName, '', 'webm')} type="video/webm" />
+            動画をサポートしていないブラウザです。
           </video>
         </div>
         <div style={overlayStyle}></div>
