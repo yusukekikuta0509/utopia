@@ -1,6 +1,12 @@
 'use client';
 import { motion } from 'framer-motion';
 import React, { CSSProperties, useEffect, useState, useRef } from 'react';
+import { Quicksand } from 'next/font/google';
+
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+});
 
 export default function SpecialThanks() {
   const [loaded, setLoaded] = useState(false);
@@ -14,9 +20,7 @@ export default function SpecialThanks() {
           if (videoRef.current) {
             if (entry.isIntersecting) {
               videoRef.current.play();
-              if (!loaded) {
-                setLoaded(true);
-              }
+              if (!loaded) setLoaded(true);
             } else {
               videoRef.current.pause();
             }
@@ -25,14 +29,12 @@ export default function SpecialThanks() {
       },
       { threshold: 0.1 }
     );
-
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
     return () => observer.disconnect();
   }, [loaded]);
 
-  // インラインスタイルを多用して外部CSSの影響を受けにくくする
   const sectionStyle: CSSProperties = {
     position: 'relative',
     minHeight: '100vh',
@@ -89,7 +91,7 @@ export default function SpecialThanks() {
 
   const titleStyle: CSSProperties = {
     fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     letterSpacing: '0.2em',
     marginBottom: '1.5rem',
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
@@ -115,19 +117,13 @@ export default function SpecialThanks() {
   };
 
   return (
-    <section id="special-thanks" ref={sectionRef} style={sectionStyle}>
+    // クラス名を追加して、全体に Quicksand フォントを適用
+    <section id="special-thanks" ref={sectionRef} className={quicksand.className} style={sectionStyle}>
       {/* 背景動画 */}
       <div style={videoContainerStyle}>
-        <video
-          ref={videoRef}
-          loop
-          muted
-          playsInline
-          style={videoStyle}
-        >
+        <video ref={videoRef} loop muted playsInline style={videoStyle}>
           <source src="videos/water-mobile.mp4" type="video/mp4" />
         </video>
-        {/* オーバーレイ */}
         <div style={overlayStyle}></div>
       </div>
       
@@ -150,7 +146,8 @@ export default function SpecialThanks() {
             transition={{ duration: 1, delay: 0.3 }}
           >
             本公演の開催にあたり、多くの方々にご支援いただきました。
-            <br />心より感謝申し上げます。
+            <br />
+            心より感謝申し上げます。
           </motion.p>
           
           <motion.div
@@ -164,7 +161,10 @@ export default function SpecialThanks() {
               <p style={listItemStyle}>佐久間 晴士様　-映像制作</p>
               <p style={listItemStyle}>小島 慎ノ介様　-撮影協力</p>
               <p style={listItemStyle}>菊田 佑輔様　-webパンフレット制作</p>
-              <p style={listItemStyle}>目白Gallery-O5 Le Royal、Gallery-O17 Mademoiselle、Studio CYBER GIGS、Spacemarket、Bar anda     -撮影協力</p>
+              <p style={listItemStyle}>
+                目白Gallery-O5 Le Royal、Gallery-O17 Mademoiselle、Studio CYBER GIGS、Spacemarket、Bar anda
+                -撮影協力
+              </p>
               <p style={listItemStyle}>ご来場いただいた皆様</p>
             </div>
           </motion.div>

@@ -1,6 +1,12 @@
 'use client';
 import { motion } from 'framer-motion';
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import { Quicksand } from 'next/font/google';
+
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+});
 
 export default function HeroSection() {
   const [loaded, setLoaded] = useState(false);
@@ -11,7 +17,6 @@ export default function HeroSection() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // セクションがビューポートに入ったら再生・フェードイン
           if (videoRef.current) {
             if (entry.isIntersecting) {
               videoRef.current.play();
@@ -22,7 +27,7 @@ export default function HeroSection() {
           }
         });
       },
-      { threshold: 0.1 } // セクションの10%が表示されたら発火
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) {
@@ -31,7 +36,6 @@ export default function HeroSection() {
     return () => observer.disconnect();
   }, []);
 
-  // インラインスタイルを多用して外部CSSの影響を受けにくくする
   const sectionStyle: CSSProperties = {
     position: 'relative',
     minHeight: '100vh',
@@ -39,6 +43,8 @@ export default function HeroSection() {
     backgroundColor: '#000',
     color: '#fff',
     overflow: 'hidden',
+    // next/font で読み込んだフォントを適用
+    fontFamily: quicksand.style.fontFamily,
   };
 
   const videoContainerStyle: CSSProperties = {
@@ -76,7 +82,7 @@ export default function HeroSection() {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 999, // 非常に高い値を設定
+    zIndex: 999,
   };
 
   const contentStyle: CSSProperties = {
@@ -88,7 +94,7 @@ export default function HeroSection() {
 
   const titleStyle: CSSProperties = {
     fontSize: 'clamp(2rem, 5vw, 4rem)',
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     letterSpacing: '0.2em',
     marginBottom: '1.5rem',
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
@@ -108,22 +114,12 @@ export default function HeroSection() {
 
   return (
     <section ref={sectionRef} style={sectionStyle}>
-      {/* 背景動画 */}
       <div style={videoContainerStyle}>
-        <video
-          ref={videoRef}
-          loop
-          muted
-          playsInline
-          style={videoStyle}
-        >
+        <video ref={videoRef} loop muted playsInline style={videoStyle}>
           <source src="videos/water-mobile.mp4" type="video/mp4" />
         </video>
-        {/* オーバーレイ */}
         <div style={overlayStyle}></div>
       </div>
-      
-      {/* テキストコンテンツ */}
       <div style={contentContainerStyle}>
         <div style={contentStyle}>
           <motion.h1
@@ -134,7 +130,6 @@ export default function HeroSection() {
           >
             UTOPIA
           </motion.h1>
-          
           <motion.div
             style={subtitleStyle}
             initial={{ opacity: 0 }}
@@ -145,7 +140,6 @@ export default function HeroSection() {
             <p style={{ marginBottom: '0.25rem' }}>4/26</p>
             <p>16th春公演</p>
           </motion.div>
-          
           <motion.div
             style={infoStyle}
             initial={{ opacity: 0 }}
@@ -156,7 +150,6 @@ export default function HeroSection() {
             <p style={{ marginBottom: '0.25rem' }}>open : 12:30</p>
             <p>start : 13:00</p>
           </motion.div>
-
           <motion.div
             style={infoStyle}
             initial={{ opacity: 0 }}

@@ -110,20 +110,39 @@ export default function ExecutiveGreeting() {
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
   };
 
-  // アンケートボタンとモーダルのスタイル
+  // 改良されたアンケートボタンスタイル
   const surveyButtonStyle: CSSProperties = {
-    display: 'inline-block',
-    marginTop: '2rem',
-    padding: '0.75rem 1.5rem',
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '10px',
+    margin: '2.5rem auto 0',
+    padding: '0.85rem 1.75rem',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
     color: '#fff',
-    border: '1px solid rgba(255, 255, 255, 0.3)',
-    borderRadius: '4px',
-    fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
+    border: '1px solid rgba(255, 255, 255, 0.4)',
+    borderRadius: '8px',
+    fontSize: 'clamp(0.85rem, 1.7vw, 1rem)',
+    fontWeight: 'bold',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
     textTransform: 'uppercase',
     letterSpacing: '1px',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+    position: 'relative',
+    overflow: 'hidden',
+  };
+
+  const buttonHighlightStyle: CSSProperties = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    background: 'linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%)',
+    backgroundSize: '200% 200%',
+    animation: 'shimmer 3s infinite',
+    zIndex: -1,
   };
 
   // モーダル全体のコンテナスタイル - 改良
@@ -242,8 +261,22 @@ export default function ExecutiveGreeting() {
     opacity: 0.8,
   };
 
+  // パルスアニメーション用のキーフレーム
+  const pulseKeyframes = `
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+  `;
+
   return (
     <section id="greeting" ref={sectionRef} style={sectionStyle} className="snap-section">
+      <style>{pulseKeyframes}</style>
       <div style={videoContainerStyle}>
         <video
           ref={videoRef}
@@ -299,20 +332,29 @@ export default function ExecutiveGreeting() {
             transition={{ duration: 1, delay: 0.9 }}
             style={{ textAlign: 'center' }}
           >
-            <button 
+            <motion.button 
               style={surveyButtonStyle} 
               onClick={() => setShowSurvey(true)}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+              whileHover={{ 
+                backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                borderColor: 'rgba(255, 255, 255, 0.6)',
+                scale: 1.03
               }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+              animate={{ 
+                scale: [1, 1.03, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse"
               }}
             >
+              <div style={buttonHighlightStyle}></div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
               アンケートにご協力ください
-            </button>
+            </motion.button>
           </motion.div>
         </div>
       </div>

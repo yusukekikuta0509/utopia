@@ -2,6 +2,12 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import { Quicksand } from 'next/font/google';
+
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+});
 
 export interface DanceGenreProps {
   id: string;
@@ -10,7 +16,7 @@ export interface DanceGenreProps {
   performers: string[];
 }
 
-// performersをchunkSizeごとに分割して配列の配列にする関数
+// performers を chunkSize ごとに分割して配列の配列にする関数
 function chunkArray<T>(array: T[], chunkSize: number): T[][] {
   const result: T[][] = [];
   for (let i = 0; i < array.length; i += chunkSize) {
@@ -21,7 +27,7 @@ function chunkArray<T>(array: T[], chunkSize: number): T[][] {
 
 // 動画ファイルのパスを生成するヘルパー関数
 function getEncodedVideoPath(name: string, suffix: string = '', ext: string = 'mp4'): string {
-  // safeNameはそのまま表示に使い、ファイルパス部分のみエンコード
+  // safeName はそのまま表示に使い、ファイルパス部分のみエンコード
   const fileName = encodeURIComponent(name.toLowerCase());
   return `/videos/${fileName}${suffix ? '-' + suffix : ''}.${ext}`;
 }
@@ -37,7 +43,7 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // performersを1行あたり7人に調整
+  // performers を 1 行あたり 7 人に調整
   const chunkedPerformers = chunkArray(performers, 7);
 
   useEffect(() => {
@@ -56,7 +62,7 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
           }
         });
       },
-      { threshold: 0.1 } // セクションの10%が表示されたら発火
+      { threshold: 0.1 } // セクションの 10% が表示されたら発火
     );
 
     if (sectionRef.current) {
@@ -107,7 +113,7 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
     zIndex: 1,
   };
 
-  // オーバーレイは少し薄めに戻して写真/動画の視認性を高める
+  // 背景のぼかし削除（オーバーレイ）
   const overlayStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
@@ -143,12 +149,13 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
   // ジャンル名にエフェクトを追加
   const titleStyle: CSSProperties = {
     fontSize: 'clamp(2.5rem, 8vw, 4rem)',
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     letterSpacing: '0.2em',
     marginBottom: '0.5rem',
-    textShadow: '0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5)', // 白い光彩エフェクト復活
+    textShadow:
+      '0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5)',
     color: '#ffffff',
-    textTransform: 'uppercase', // 大文字表示
+    textTransform: 'uppercase',
   };
 
   const choreographerStyle: CSSProperties = {
@@ -158,7 +165,7 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
     textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
   };
 
-  // 出演者セクションスタイル - 背景を少し薄くする
+  // 出演者セクションスタイル
   const performersContainerStyle: CSSProperties = {
     marginTop: '0.5rem',
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
@@ -175,19 +182,18 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
     opacity: 0.9,
   };
 
-  // 出演者名をさらに小さく
   const performersLineStyle: CSSProperties = {
-    fontSize: 'clamp(0.6rem, 1.8vw, 0.8rem)', // さらに小さく
+    fontSize: 'clamp(0.6rem, 1.8vw, 0.8rem)',
     marginBottom: '0.15rem',
     lineHeight: '1.2',
     textShadow: '0 1px 2px rgba(0, 0, 0, 0.8)',
     fontWeight: 'normal',
-    opacity: 0.8, // より薄く
-    letterSpacing: '0.02em', // 文字間を少し広げる
+    opacity: 0.8,
+    letterSpacing: '0.02em',
   };
 
   return (
-    <section id={id} ref={sectionRef} style={sectionStyle}>
+    <section id={id} ref={sectionRef} className={quicksand.className} style={sectionStyle}>
       {/* 上半分：写真 */}
       <div style={topHalfStyle}>
         <div style={imageContainerStyle}>
@@ -241,27 +247,26 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
           animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 20 }}
           transition={{ duration: 0.8 }}
         >
-          {/* タイトルに追加のアニメーション効果 */}
           <motion.h2
             style={titleStyle}
-            animate={{ 
+            animate={{
               textShadow: [
                 '0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5)',
                 '0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.7)',
-                '0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5)'
-              ]
+                '0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5)',
+              ],
             }}
             transition={{
               duration: 2.5,
               repeat: Infinity,
-              repeatType: 'reverse'
+              repeatType: 'reverse',
             }}
           >
             {safeName}
           </motion.h2>
-          
+
           <p style={choreographerStyle}>振り師: {choreographer}</p>
-          
+
           {/* 出演者セクション */}
           <div style={performersContainerStyle}>
             <p style={performersLabelStyle}>出演者</p>

@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import React, { CSSProperties, useEffect, useState, useRef } from 'react';
 
+
 export default function MemberList() {
   const [loaded, setLoaded] = useState(false);
   const [showMembers, setShowMembers] = useState(false);
@@ -32,14 +33,10 @@ export default function MemberList() {
       "織田麗奈", "髙岡千夏", "稲見柚奈", "吉岡莉雪", "小林由季", "松浦英麻", "上原真菜", "成澤未蘭", "西村そら", 
       "西野友那", "浅野夏帆", "浅野友彩", "大島瑠琉", "伊澤哲世", "桑澤昴", "後藤里佳子", "青山慶啓", "朴英娜", 
       "中田妃莉南", "黒沢珠莉", "堀田菜月", "橋本大河", "原口紫帆", "大島陽菜", "豊田夏菜", "傳馬奈央", "小川紗利奈", 
-      "西谷黎", "尾崎彩香", "井本真城", "山田莉奈", "磯部亜希宇", "山小春", "佐藤妃采美", "手嶋千尋", "小池向日葵", 
-      "上瀬結菜", "成田花香", "村越仁琥", "内山美仁音", "白川緋奈乃", "勇﨑玲奈", "河合胡実", "御代川萌", "山﨑祐佳", 
-      "川口璃々花", "白石光珠", "佐々木梨乃", "松岡日向", "伊丹舞子", "金子紗和", "長井幸乃", "佐藤毬子", "礒﨑佳乃", 
-      "高橋愛李", "田中凛奈", "村野麒咲", "木谷理心"
+      "西谷黎", "尾崎彩香", "井本真城", "山田莉奈", "磯﨑佳乃", "高橋愛李", "田中凛奈", "村野麒咲", "木谷理心"
     ]
   };
 
-  // Intersection Observer で動画の再生制御を行うための ref
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -63,7 +60,6 @@ export default function MemberList() {
     return () => observer.disconnect();
   }, [loaded]);
 
-  // インラインスタイル
   const sectionStyle: CSSProperties = {
     position: 'relative',
     minHeight: '100vh',
@@ -121,7 +117,7 @@ export default function MemberList() {
 
   const titleStyle: CSSProperties = {
     fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     letterSpacing: '0.2em',
     marginBottom: '1.5rem',
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
@@ -190,16 +186,11 @@ export default function MemberList() {
   };
 
   return (
-    <section id="member-list" ref={sectionRef} style={sectionStyle}>
+    // MemberList コンポーネントにも next/font で読み込んだフォントを適用するため、ルート要素に className を追加
+    <section id="member-list" ref={sectionRef} className="member-list" style={sectionStyle}>
       {/* 背景動画 */}
       <div style={videoContainerStyle}>
-        <video
-          ref={videoRef}
-          loop
-          muted
-          playsInline
-          style={videoStyle}
-        >
+        <video ref={videoRef} loop muted playsInline style={videoStyle}>
           <source src="/videos/water-mobile.mp4" type="video/mp4" />
         </video>
         {/* オーバーレイ */}
@@ -215,7 +206,7 @@ export default function MemberList() {
             animate={{ opacity: loaded ? 1 : 0 }}
             transition={{ duration: 1 }}
           >
-            名簿一覧
+            Menber List
           </motion.h2>
           
           {!showMembers ? (

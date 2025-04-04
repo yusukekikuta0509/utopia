@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import HeroSection from '@/components/HeroSection';
+import Mpage from '@/components/Mpage';
 import ExecutiveGreeting from '@/components/ExecutiveGreeting';
 import LogoDesign from '@/components/LogoDesign';
 import DanceGenres, { DanceGenreProps } from '@/components/DanceGenres';
@@ -684,6 +685,7 @@ export default function Home() {
         <Navbar />
         <main className="flex-grow">
           <HeroSection />
+          <Mpage />
           <ExecutiveGreeting />
           <LogoDesign />
           <DanceGenres genres={genres} concertGenres={concertGenres} />

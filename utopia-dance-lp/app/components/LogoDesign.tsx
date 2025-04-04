@@ -2,6 +2,12 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import { Quicksand } from 'next/font/google';
+
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+});
 
 export default function LogoDesign() {
   const [loaded, setLoaded] = useState(false);
@@ -31,7 +37,6 @@ export default function LogoDesign() {
     return () => observer.disconnect();
   }, []);
 
-  // セクション全体のスタイル
   const sectionStyle: CSSProperties = {
     position: 'relative',
     minHeight: '100vh',
@@ -41,7 +46,6 @@ export default function LogoDesign() {
     overflow: 'hidden',
   };
 
-  // 背景動画コンテナのスタイル
   const videoContainerStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
@@ -51,7 +55,6 @@ export default function LogoDesign() {
     zIndex: 1,
   };
 
-  // 背景動画のスタイル
   const videoStyle: CSSProperties = {
     width: '100%',
     height: '100%',
@@ -59,7 +62,6 @@ export default function LogoDesign() {
     opacity: 0.6,
   };
 
-  // 既存のオーバーレイ（黒）スタイル
   const overlayStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
@@ -70,7 +72,6 @@ export default function LogoDesign() {
     zIndex: 2,
   };
 
-  // 薄い白色のオーバーレイ（追加）スタイル
   const whiteOverlayStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
@@ -81,7 +82,6 @@ export default function LogoDesign() {
     zIndex: 2.5,
   };
 
-  // 中央コンテンツ配置用コンテナのスタイル
   const contentContainerStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
@@ -94,7 +94,6 @@ export default function LogoDesign() {
     zIndex: 999,
   };
 
-  // コンテンツ全体のスタイル
   const contentStyle: CSSProperties = {
     textAlign: 'center',
     padding: '0 1rem',
@@ -102,17 +101,15 @@ export default function LogoDesign() {
     width: '100%',
   };
 
-  // タイトルのスタイル
   const titleStyle: CSSProperties = {
     fontSize: 'clamp(2rem, 5vw, 4rem)',
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     letterSpacing: '0.2em',
     marginBottom: '1.5rem',
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
     color: '#ffffff',
   };
 
-  // 説明文のスタイル
   const paragraphStyle: CSSProperties = {
     fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
     lineHeight: '1.6',
@@ -120,11 +117,11 @@ export default function LogoDesign() {
   };
 
   return (
-    <section id="logo" ref={sectionRef} style={sectionStyle}>
+    <section id="logo" ref={sectionRef} className={quicksand.className} style={sectionStyle}>
       {/* 背景動画 */}
       <div style={videoContainerStyle}>
         <video ref={videoRef} loop muted playsInline style={videoStyle}>
-          <source src='/videos/white.mp4' type='video/mp4' />
+          <source src="/videos/white.mp4" type="video/mp4" />
         </video>
         <div style={overlayStyle}></div>
         <div style={whiteOverlayStyle}></div>
@@ -143,8 +140,8 @@ export default function LogoDesign() {
           </motion.h1>
           <div style={{ margin: '1rem 0' }}>
             <Image
-              src='/images/logo.PNG'
-              alt='UTOPIA Logo Design'
+              src="/images/logo.PNG"
+              alt="UTOPIA Logo Design"
               width={300}
               height={380}
               style={{ display: 'block', margin: '0 auto', filter: 'grayscale(100%)' }}
@@ -164,5 +161,3 @@ export default function LogoDesign() {
     </section>
   );
 }
-
-// Removed redundant export default statement
