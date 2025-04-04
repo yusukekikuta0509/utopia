@@ -160,10 +160,11 @@ export default function SpecialThanks() {
             transition={{ duration: 1, delay: 0.6 }}
           >
             <div style={{ textAlign: 'left', margin: '0 auto', maxWidth: '80%' }}>
-              <p style={listItemStyle}>○○○様 - 会場提供</p>
-              <p style={listItemStyle}>○○○様 - 機材協力</p>
-              <p style={listItemStyle}>○○○様 - 衣装提供</p>
-              <p style={listItemStyle}>○○○サークル - 技術協力</p>
+              <p style={listItemStyle}>Rootz株式会社様　-公演制作</p>
+              <p style={listItemStyle}>佐久間 晴士様　-映像制作</p>
+              <p style={listItemStyle}>小島 慎ノ介様　-撮影協力</p>
+              <p style={listItemStyle}>菊田 佑輔様　-webパンフレット制作</p>
+              <p style={listItemStyle}>目白Gallery-O5 Le Royal、Gallery-O17 Mademoiselle、Studio CYBER GIGS、Spacemarket、Bar anda     -撮影協力</p>
               <p style={listItemStyle}>ご来場いただいた皆様</p>
             </div>
           </motion.div>
