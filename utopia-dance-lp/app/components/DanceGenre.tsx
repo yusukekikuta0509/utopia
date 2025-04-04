@@ -10,7 +10,7 @@ export interface DanceGenreProps {
   performers: string[];
 }
 
-// 例: performers を chunkSize ごとに分割して配列の配列にする関数
+// performersをchunkSizeごとに分割して配列の配列にする関数
 function chunkArray<T>(array: T[], chunkSize: number): T[][] {
   const result: T[][] = [];
   for (let i = 0; i < array.length; i += chunkSize) {
@@ -21,7 +21,7 @@ function chunkArray<T>(array: T[], chunkSize: number): T[][] {
 
 // 動画ファイルのパスを生成するヘルパー関数
 function getEncodedVideoPath(name: string, suffix: string = '', ext: string = 'mp4'): string {
-  // safeName はそのまま表示に使い、ファイルパス部分のみエンコード
+  // safeNameはそのまま表示に使い、ファイルパス部分のみエンコード
   const fileName = encodeURIComponent(name.toLowerCase());
   return `/videos/${fileName}${suffix ? '-' + suffix : ''}.${ext}`;
 }
@@ -37,8 +37,8 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // performers を8人ごとに分割
-  const chunkedPerformers = chunkArray(performers, 8);
+  // performersを1行あたり7人に調整
+  const chunkedPerformers = chunkArray(performers, 7);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -107,7 +107,7 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
     zIndex: 1,
   };
 
-  // 背景のぼかし削除
+  // オーバーレイは少し薄めに戻して写真/動画の視認性を高める
   const overlayStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
@@ -135,34 +135,55 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
     padding: '0 1rem',
     display: 'flex',
     flexDirection: 'column',
-    gap: '1rem',
+    gap: '0.75rem',
+    maxWidth: '90%',
+    margin: '0 auto',
   };
 
-  // タイトルスタイル
+  // ジャンル名にエフェクトを追加
   const titleStyle: CSSProperties = {
-    fontSize: 'clamp(2rem, 5vw, 4rem)',
+    fontSize: 'clamp(2.5rem, 8vw, 4rem)',
     fontWeight: 'bold',
     letterSpacing: '0.2em',
-    marginBottom: '1.5rem',
-    textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
+    marginBottom: '0.5rem',
+    textShadow: '0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5)', // 白い光彩エフェクト復活
     color: '#ffffff',
+    textTransform: 'uppercase', // 大文字表示
   };
 
   const choreographerStyle: CSSProperties = {
-    fontSize: 'clamp(1rem, 3vw, 1.25rem)',
-    textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
-  };
-
-  const performersLabelStyle: CSSProperties = {
-    fontSize: 'clamp(0.875rem, 2vw, 0.5rem)',
+    fontSize: 'clamp(1rem, 3.5vw, 1.25rem)',
+    fontWeight: 'bold',
     marginBottom: '0.5rem',
     textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
   };
 
+  // 出演者セクションスタイル - 背景を少し薄くする
+  const performersContainerStyle: CSSProperties = {
+    marginTop: '0.5rem',
+    backgroundColor: 'rgba(0, 0, 0, 0.35)',
+    padding: '0.5rem 0.75rem',
+    borderRadius: '4px',
+  };
+
+  const performersLabelStyle: CSSProperties = {
+    fontSize: 'clamp(0.75rem, 2.5vw, 0.9rem)',
+    marginBottom: '0.4rem',
+    fontWeight: 'bold',
+    textShadow: '0 1px 4px rgba(0, 0, 0, 0.8)',
+    letterSpacing: '0.05em',
+    opacity: 0.9,
+  };
+
+  // 出演者名をさらに小さく
   const performersLineStyle: CSSProperties = {
-    fontSize: 'clamp(0.9rem, 3vw, 0.25rem)',
-    marginBottom: '0.3rem',
-    textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
+    fontSize: 'clamp(0.6rem, 1.8vw, 0.8rem)', // さらに小さく
+    marginBottom: '0.15rem',
+    lineHeight: '1.2',
+    textShadow: '0 1px 2px rgba(0, 0, 0, 0.8)',
+    fontWeight: 'normal',
+    opacity: 0.8, // より薄く
+    letterSpacing: '0.02em', // 文字間を少し広げる
   };
 
   return (
@@ -220,13 +241,33 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
           animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 20 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 style={titleStyle}>{safeName}</h2>
+          {/* タイトルに追加のアニメーション効果 */}
+          <motion.h2
+            style={titleStyle}
+            animate={{ 
+              textShadow: [
+                '0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5)',
+                '0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.7)',
+                '0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5)'
+              ]
+            }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              repeatType: 'reverse'
+            }}
+          >
+            {safeName}
+          </motion.h2>
+          
           <p style={choreographerStyle}>振り師: {choreographer}</p>
-          <div>
-            <p style={performersLabelStyle}>出演者:</p>
+          
+          {/* 出演者セクション */}
+          <div style={performersContainerStyle}>
+            <p style={performersLabelStyle}>出演者</p>
             {chunkedPerformers.map((line, idx) => (
               <p key={idx} style={performersLineStyle}>
-                {line.join(', ')}
+                {line.join('・')}
               </p>
             ))}
           </div>
