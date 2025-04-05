@@ -60,6 +60,7 @@ export default function LogoDesign() {
     height: '100%',
     objectFit: 'cover',
     opacity: 0.6,
+    filter: 'grayscale(100%)',
   };
 
   const overlayStyle: CSSProperties = {
@@ -111,7 +112,7 @@ export default function LogoDesign() {
   };
 
   const paragraphStyle: CSSProperties = {
-    fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
+    fontSize: 'clamp(0.68rem, 2vw, 1.125rem)',
     lineHeight: '1.6',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
   };
@@ -121,7 +122,7 @@ export default function LogoDesign() {
       {/* 背景動画 */}
       <div style={videoContainerStyle}>
         <video ref={videoRef} loop muted playsInline style={videoStyle}>
-          <source src="/videos/white.mp4" type="video/mp4" />
+          <source src="/videos/logo_mobile.mp4" type="video/mp4" />
         </video>
         <div style={overlayStyle}></div>
         <div style={whiteOverlayStyle}></div>
@@ -153,8 +154,8 @@ export default function LogoDesign() {
             animate={{ opacity: loaded ? 1 : 0 }}
             transition={{ duration: 1, delay: 0.6 }}
           >
-            UTOPIAのロゴは『理想郷』という意味合いから着想を得ています。期待と夢を風船のような文字に込め、モノクロの世界観で鮮明さと幻想性の両立を目指しました。
-            観客の皆様にとって、またサークル員一同の『理想郷』となりますよう願いを込めて。
+            UTOPIAのロゴは『理想郷』という意味合いから着想を得ています。<br />期待と夢を風船のような文字に込め、<br />モノクロの世界観で鮮明さと幻想性の両立を目指しました。
+            <br /><br />本公演が観客の皆様にとって、<br />またサークル員一同の『理想郷』となりますよう<br />願いを込めて。
           </motion.p>
         </div>
       </div>

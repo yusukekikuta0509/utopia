@@ -92,13 +92,14 @@ export default function ExecutiveGreeting() {
   };
 
   const contentStyle: CSSProperties = {
-    padding: '0 1rem',
-    maxWidth: '32rem',
+    margin: '0 auto',
+    padding: '0 1rem',    // 余白を増やす
+    maxWidth: '40rem',    // 全体の幅を狭める
     width: '100%',
   };
-
+  
   const titleStyle: CSSProperties = {
-    fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+    fontSize: 'clamp(1.2rem, 2.5vw, 2rem)', // 小さめのフォントサイズに変更
     fontWeight: 'normal',
     marginBottom: '1.5rem',
     paddingBottom: '0.5rem',
@@ -107,20 +108,23 @@ export default function ExecutiveGreeting() {
     textTransform: 'uppercase',
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
     color: '#fff',
+    textAlign: 'center',
   };
-
+  
   const paragraphStyle: CSSProperties = {
-    fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+    fontSize: 'clamp(0.68rem, 1.8vw, 0.5rem)', // 小さめに調整
     lineHeight: 1.7,
     marginBottom: '1.5rem',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
+    
   };
-
+  
   const signatureStyle: CSSProperties = {
-    fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+    fontSize: 'clamp(0.75rem, 1.8vw, 0.9rem)', // 小さめに調整
     textAlign: 'right',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
   };
+  
 
   // 改良されたアンケートボタンスタイル
   const surveyButtonStyle: CSSProperties = {
@@ -319,12 +323,12 @@ export default function ExecutiveGreeting() {
             animate={{ opacity: loaded ? 1 : 0 }}
             transition={{ duration: 1, delay: 0.3 }}
           >
-            この度はaka Wa.Se.Da. 16代目春公演『Utopia』にお越しいただき誠にありがとうございます。
-            本公演のタイトルである『Utopia』は『理想郷』という意味で、理想的な世界を意味します。
-            本公演の演目一つ一つが私たちの『理想』の作品であり、本公演が『理想郷』のような公演であることを表現しています。
-            そして、ダンスを通じて素敵なサークル員が集うaka Wa.Se.Da. が『理想郷』であり、これから新入生を含めて3代で新たな理想郷を作っていきたい、という願いも込めています。
-            16代・17代で作る初めての作品です。ご来場される皆様に楽しんで頂けるよう、サークル員一丸となって練習や準備に励んできました。
-            ご来場頂いた全ての皆様に公演を楽しんで頂けたら幸いです。<br />『 Utopia』を最後までお楽しみください。
+            この度はaka Wa.Se.Da. 16代目春公演『Utopia』にお越しいただき<br />誠にありがとうございます。
+            本公演のタイトルである『Utopia』は<br />日本語では『理想郷』という表現がされ、理想的な世界を意味します。<br />
+            本公演の演目一つ一つが私たちの『理想』の作品であり、<br />本公演が『理想郷』のような公演であることを表現しています。<br />
+            そして、ダンスを通じて素敵なサークル員が集うこのaka Wa.Se.Da. が<br />『理想郷』であり、これからの新入生を含めた3代で新たな理想郷を<br />作っていきたい、という願いも込めています。
+            本公演は16代・17代で作る<br />初めての作品でもあるためご来場される皆様に楽しんで頂けるよう、<br />サークル員一丸となって練習や準備に励んできました。
+            <br />ご来場頂いた全ての皆様に公演を楽しんで頂けたら幸いです。<br /><br />『 Utopia』を最後までお楽しみください。
           </motion.p>
           
           <motion.p

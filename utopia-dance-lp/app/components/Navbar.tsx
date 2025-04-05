@@ -172,23 +172,6 @@ export default function Navbar() {
     zIndex: 1001,
   };
 
-  const concertGenres = [
-    { id: 'M1', name: 'OP', href: '#m1' },
-    { id: 'M2', name: 'コレオ', href: '#m2' },
-    { id: 'M3', name: 'Style', href: '#m3' },
-    { id: 'M4', name: 'Middle', href: '#m4' },
-    { id: 'M5', name: 'Girls', href: '#m5' },
-    { id: 'M6', name: 'Pop', href: '#m6' },
-    { id: 'M7', name: 'R&B', href: '#m7' },
-    { id: 'break', name: '休憩', href: '' },
-    { id: 'M8', name: 'House', href: '#m8' },
-    { id: 'M9', name: 'Waack', href: '#m9' },
-    { id: 'M10', name: 'Break', href: '#m10' },
-    { id: 'M11', name: 'New', href: '#m11' },
-    { id: 'M12', name: 'Jazz', href: '#m12' },
-    { id: 'M13', name: 'Lock', href: '#m13' },
-    { id: 'M14', name: 'Ending', href: '#m14' },
-  ];
 
   const dividerStyle: CSSProperties = {
     width: '30px',
@@ -264,53 +247,6 @@ export default function Navbar() {
                   LOGO DESIGN
                 </Link>
               </motion.div>
-
-              <motion.div style={dividerStyle} custom={1} variants={itemVariants} />
-
-              
-
-              <motion.div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  width: '100%',
-                  maxHeight: '40vh',
-                  overflowY: 'auto',
-                  padding: '0.5rem',
-                }}
-                custom={3}
-                variants={itemVariants}
-              >
-                {concertGenres.map((genre) => {
-                  if (genre.id === 'break') {
-                    return (
-                      <div
-                        key={genre.id}
-                        style={{ ...fullscreenMenuItemStyle, cursor: 'default', fontSize: '1.2rem' }}
-                      >
-                        {genre.name}
-                      </div>
-                    );
-                  }
-                  return (
-                    <Link 
-                      key={genre.id} 
-                      href={genre.href} 
-                      style={{
-                        ...fullscreenMenuItemStyle,
-                        fontSize: '1.2rem',
-                        margin: '0.3rem 0',
-                      }}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {genre.name}
-                    </Link>
-                  );
-                })}
-              </motion.div>
-
-              <motion.div style={dividerStyle} custom={4} variants={itemVariants} />
 
               <motion.div custom={5} variants={itemVariants}>
                 <Link 

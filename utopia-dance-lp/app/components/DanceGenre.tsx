@@ -281,11 +281,11 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
             {safeName}
           </motion.h2>
 
-          <p style={choreographerStyle}>振り師: {choreographer}</p>
+          <p style={choreographerStyle}>Choreographer<br />{choreographer}</p>
 
           {/* 出演者セクション */}
           <div style={performersContainerStyle}>
-            <p style={performersLabelStyle}>出演者</p>
+            <p style={performersLabelStyle}>Dancer</p>
             {chunkedPerformers.map((line, idx) => (
               <p key={idx} style={performersLineStyle}>
                 {line.join('・')}

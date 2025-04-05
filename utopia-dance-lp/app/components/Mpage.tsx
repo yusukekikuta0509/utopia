@@ -212,49 +212,42 @@ export default function PerformanceOrderSection() {
           animate={{ opacity: loaded ? 1 : 0 }}
           transition={{ duration: 1, delay: 0.3 }}
         >
-          {performances.map((performance, index) => {
-            // ファイル名変換用
-            const safeFileName = getSafeFileName(performance.name);
-            return (
-              <motion.a
-                key={performance.id}
-                href={performance.href}
-                style={performanceItemStyle}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 20 }}
-                transition={{ duration: 0.5, delay: 0.1 * index + 0.5 }}
-                whileHover={{
-                  transform: 'translateY(-5px)',
-                  boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
+          {performances.map((performance) => {
+        const safeFileName = getSafeFileName(performance.name);
+        return (
+          <a
+            key={performance.id}
+            href={performance.href}
+            style={performanceItemStyle}
+          >
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
+              <Image
+                src={`/images/${safeFileName}.JPG`}
+                alt={`${performance.name} dance`}
+                fill
+                style={{ objectFit: 'cover', filter: 'grayscale(100%)' }}
+                priority
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                  pointerEvents: 'none',
                 }}
-              >
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
-                  <Image
-                    src={`/images/${safeFileName}.JPG`}
-                    alt={`${performance.name} dance`}
-                    fill
-                    style={{ objectFit: 'cover', filter: 'grayscale(100%)' }}
-                    priority
-                  />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                      pointerEvents: 'none',
-                    }}
-                  />
-                </div>
-                <div style={contentStyle}>
-                  <h3 style={idStyle}>{performance.id}</h3>
-                  <p style={nameStyle}>{performance.name}</p>
-                </div>
-              </motion.a>
-            );
-          })}
+              />
+            </div>
+            <div style={contentStyle}>
+              <h3 style={idStyle}>{performance.id}</h3>
+              <p style={nameStyle}>{performance.name}</p>
+            </div>
+          </a>
+        );
+      })}
+
         </motion.div>
       </div>
     </section>

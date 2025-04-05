@@ -100,7 +100,7 @@ export default function SpecialThanks() {
   };
 
   const paragraphStyle: CSSProperties = {
-    fontSize: 'clamp(0.875rem, 1.5vw, 1rem)',
+    fontSize: 'clamp(0.65rem, 1.5vw, 1rem)',
     marginBottom: '1.5rem',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
     lineHeight: '1.6',
@@ -111,7 +111,7 @@ export default function SpecialThanks() {
   };
 
   const listItemStyle: CSSProperties = {
-    fontSize: 'clamp(0.875rem, 1.5vw, 1rem)',
+    fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
     marginBottom: '0.5rem',
     textShadow: '0 0 8px rgba(0, 0, 0, 0.8)',
   };
@@ -157,15 +157,14 @@ export default function SpecialThanks() {
             transition={{ duration: 1, delay: 0.6 }}
           >
             <div style={{ textAlign: 'left', margin: '0 auto', maxWidth: '80%' }}>
-              <p style={listItemStyle}>Rootz株式会社様　-公演制作</p>
-              <p style={listItemStyle}>佐久間 晴士様　-映像制作</p>
-              <p style={listItemStyle}>小島 慎ノ介様　-撮影協力</p>
-              <p style={listItemStyle}>菊田 佑輔様　-webパンフレット制作</p>
+              <p style={listItemStyle}>公演制作:<br /><br />Rootz株式会社様</p><br />
+              <p style={listItemStyle}>映像制作:<br /><br />佐久間 晴士様</p><br />
+              <p style={listItemStyle}>撮影協力:<br /><br />小島 慎ノ介様</p><br />
+              <p style={listItemStyle}>Web制作 技術協力:<br /><br />Yusuke Kikuta</p><br />
               <p style={listItemStyle}>
-                目白Gallery-O5 Le Royal、Gallery-O17 Mademoiselle、Studio CYBER GIGS、Spacemarket、Bar anda
-                -撮影協力
+                撮影協力:<br /><br />目白Gallery-O5 Le Royal<br />Gallery-O17 Mademoiselle<br />Studio CYBER GIGS<br />Spacemarket、Bar anda
               </p>
-              <p style={listItemStyle}>ご来場いただいた皆様</p>
+              <p style={listItemStyle}><br />ご来場いただいた皆様</p>
             </div>
           </motion.div>
         </div>
