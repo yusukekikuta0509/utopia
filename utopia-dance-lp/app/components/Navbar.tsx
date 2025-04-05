@@ -269,7 +269,7 @@ export default function Navbar() {
               <motion.div style={dividerStyle} custom={6} variants={itemVariants} />
 
               <motion.div custom={7} variants={itemVariants} style={categoryTitleStyle}>
-                各種リンク
+                公式アカウント
               </motion.div>
 
               <motion.div
