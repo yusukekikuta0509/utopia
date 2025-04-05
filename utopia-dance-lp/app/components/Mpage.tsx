@@ -22,7 +22,7 @@ export default function PerformanceOrderSection() {
             setLoaded(true);
             // Play video when section is in view
             if (videoRef.current) {
-              videoRef.current.play().catch(error => {
+              videoRef.current.play().catch((error) => {
                 console.error("Video playback failed:", error);
               });
             }
@@ -53,6 +53,13 @@ export default function PerformanceOrderSection() {
     { id: 'M12', name: 'LOCK', href: '#m12' },
   ];
 
+  // 表示はそのまま "R&B" を維持しつつ、ファイル名用に変換するマッピング関数
+  const getSafeFileName = (name: string) => {
+    // "R&B" → "r-and-b"
+    return name.toLowerCase().replace(/&/g, '-and-');
+  };
+
+  // スタイル定義
   const sectionStyle: CSSProperties = {
     position: 'relative',
     minHeight: '100vh',
@@ -88,7 +95,8 @@ export default function PerformanceOrderSection() {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5))',
+    backgroundImage:
+      'linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5))',
     zIndex: 1,
   };
 
@@ -171,11 +179,6 @@ export default function PerformanceOrderSection() {
     color: '#fff',
   };
 
-  const getSafeName = (name: string) => {
-    // Remove special characters like & for file names
-    return name.replace(/&/g, 'and');
-  };
-
   return (
     <section ref={sectionRef} style={sectionStyle}>
       <div style={videoContainerStyle}>
@@ -200,7 +203,8 @@ export default function PerformanceOrderSection() {
           transition={{ duration: 1, delay: 0.3 }}
         >
           {performances.map((performance, index) => {
-            const safeName = getSafeName(performance.name);
+            // safeFileName 用の変換を実施
+            const safeFileName = getSafeFileName(performance.name);
             return (
               <motion.a
                 key={performance.id}
@@ -216,20 +220,16 @@ export default function PerformanceOrderSection() {
               >
                 <div style={imageContainerStyle}>
                   <Image
-                    src={`/images/${safeName.toLowerCase()}.JPG`}
-                    alt={`${safeName} dance`}
+                    src={`/images/${safeFileName}.JPG`}
+                    alt={`${performance.name} dance`}
                     fill
                     style={{ objectFit: 'cover', filter: 'grayscale(100%)' }}
                     priority
                   />
                 </div>
                 <div style={contentStyle}>
-                  <h3 style={idStyle}>
-                    {performance.id}
-                  </h3>
-                  <p style={nameStyle}>
-                    {performance.name}
-                  </p>
+                  <h3 style={idStyle}>{performance.id}</h3>
+                  <p style={nameStyle}>{performance.name}</p>
                 </div>
               </motion.a>
             );

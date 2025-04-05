@@ -35,11 +35,11 @@ export default function LoadingScreen() {
         setShowWelcome(true);
       }, 500);
 
-      // welcomeメッセージ表示後、表示時間を延長したい場合は下記の遅延時間を変更する
+      // welcomeメッセージ表示後、表示時間を延長（例：5000ms）
       setTimeout(() => {
         // ここに次の処理（例: ルーター遷移など）を記述
         // 例: router.push('/hero');
-      }, 5000); // 3000ms から 5000ms に変更
+      }, 5000);
     }
   }, [progress, router]);
 
@@ -94,11 +94,25 @@ export default function LoadingScreen() {
     textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
   };
 
+  // 既存のロゴ用スタイルはそのまま利用
   const logoStyle: CSSProperties = {
     marginBottom: '3rem',
     letterSpacing: '0.2em',
     fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
     opacity: 0.8,
+  };
+
+  // 画面下部に小さく表示するためのフッターテキスト用スタイル
+  const footerTextStyle: CSSProperties = {
+    position: 'absolute',
+    bottom: '15rem',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    fontSize: '0.75rem',
+    textAlign: 'center',
+    color: '#fff',
+    opacity: 0.8,
+    letterSpacing: '0.1em',
   };
 
   return (
@@ -132,6 +146,9 @@ export default function LoadingScreen() {
           Welcome to UTOPIA
         </motion.div>
       )}
+      <div style={footerTextStyle}>
+        ※動画ファイルを多く使用しているため、<br />通信環境の良い場所でご覧ください。
+      </div>
     </motion.div>
   );
 }
