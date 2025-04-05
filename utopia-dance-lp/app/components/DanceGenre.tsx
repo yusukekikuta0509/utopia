@@ -240,15 +240,15 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
               display: 'block',
             }}
           >
-            {/* スマホ向け（幅767px以下）の動画 */}
+            {/* 常に -mobile 動画を使用 */}
             <source
               src={getEncodedVideoPath(safeName, 'mobile')}
               type="video/mp4"
-              media="(max-width: 767px)"
             />
-            {/* PC向けの動画 */}
-            <source src={getEncodedVideoPath(safeName)} type="video/mp4" />
-            <source src={getEncodedVideoPath(safeName, '', 'webm')} type="video/webm" />
+            <source
+              src={getEncodedVideoPath(safeName, 'mobile', 'webm')}
+              type="video/webm"
+            />
             動画をサポートしていないブラウザです。
           </video>
         </div>

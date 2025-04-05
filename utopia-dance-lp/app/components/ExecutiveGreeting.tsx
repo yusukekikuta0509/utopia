@@ -2,6 +2,12 @@
 
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { Quicksand } from 'next/font/google';
+
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+});
 
 export default function ExecutiveGreeting() {
   const [loaded, setLoaded] = useState(false);
@@ -43,6 +49,8 @@ export default function ExecutiveGreeting() {
     backgroundColor: '#000',
     color: '#fff',
     overflow: 'hidden',
+    // next/font で読み込んだ Quicksand フォントを適用
+    fontFamily: quicksand.style.fontFamily,
   };
 
   const videoContainerStyle: CSSProperties = {
@@ -90,11 +98,15 @@ export default function ExecutiveGreeting() {
   };
 
   const titleStyle: CSSProperties = {
-    fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-    fontWeight: 'bold',
+    fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+    fontWeight: 'normal',
     marginBottom: '1.5rem',
     paddingBottom: '0.5rem',
     borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
+    letterSpacing: '0.2em',
+    textTransform: 'uppercase',
+    textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
+    color: '#fff',
   };
 
   const paragraphStyle: CSSProperties = {
@@ -298,7 +310,7 @@ export default function ExecutiveGreeting() {
             animate={{ opacity: loaded ? 1 : 0 }}
             transition={{ duration: 1 }}
           >
-            幹部挨拶
+            MESSAGE
           </motion.h2>
           
           <motion.p

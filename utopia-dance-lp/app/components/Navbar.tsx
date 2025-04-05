@@ -254,22 +254,20 @@ export default function Navbar() {
                   style={underlinedLinkStyle} 
                   onClick={() => setIsOpen(false)}
                 >
-                  幹部挨拶
+                  MESSAGE
                 </Link>
                 <Link 
                   href="#logo" 
                   style={underlinedLinkStyle} 
                   onClick={() => setIsOpen(false)}
                 >
-                  ロゴデザイン
+                  LOGO DESIGN
                 </Link>
               </motion.div>
 
               <motion.div style={dividerStyle} custom={1} variants={itemVariants} />
 
-              <motion.div custom={2} variants={itemVariants} style={categoryTitleStyle}>
-                ジャンル
-              </motion.div>
+              
 
               <motion.div
                 style={{
@@ -320,10 +318,18 @@ export default function Navbar() {
                   style={underlinedLinkStyle} 
                   onClick={() => setIsOpen(false)}
                 >
-                  Special Thanks
+                  SPECIAL THANKS
                 </Link>
               </motion.div>
-
+              <motion.div custom={5} variants={itemVariants}>
+                <Link 
+                  href="#member-list" 
+                  style={underlinedLinkStyle} 
+                  onClick={() => setIsOpen(false)}
+                >
+                MEMBER LIST
+                </Link>
+              </motion.div>
               <motion.div style={dividerStyle} custom={6} variants={itemVariants} />
 
               <motion.div custom={7} variants={itemVariants} style={categoryTitleStyle}>

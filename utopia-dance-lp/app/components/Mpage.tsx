@@ -13,6 +13,19 @@ export default function PerformanceOrderSection() {
   const [loaded, setLoaded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  
+  // スマホ判定用の state
+  const [isMobile, setIsMobile] = useState(false);
+
+  // 画面サイズの変化を検知し、スマホ判定を更新
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize(); // 初期チェック
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -20,7 +33,7 @@ export default function PerformanceOrderSection() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setLoaded(true);
-            // Play video when section is in view
+            // セクションが表示されたら動画を再生
             if (videoRef.current) {
               videoRef.current.play().catch((error) => {
                 console.error("Video playback failed:", error);
@@ -109,18 +122,16 @@ export default function PerformanceOrderSection() {
     textAlign: 'center',
   };
 
-  // タイトルに黒いシャドウを適用して視認性を向上
   const titleStyle: CSSProperties = {
     fontSize: 'clamp(2rem, 5vw, 3.5rem)',
     fontWeight: '300',
     letterSpacing: '0.2em',
     marginBottom: '3rem',
     textTransform: 'uppercase',
-    textShadow: '2px 2px 4px #000',
+    textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
     color: '#fff',
   };
 
-  // パフォーマンスアイテム内テキスト用のスタイル
   const contentStyle: CSSProperties = {
     position: 'relative',
     zIndex: 1,
@@ -149,13 +160,17 @@ export default function PerformanceOrderSection() {
     textShadow: '1px 1px 2px #000',
   };
 
+  // グリッドレイアウトのスタイルを、スマホの場合は２列に変更
   const performanceListStyle: CSSProperties = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+    gridTemplateColumns: isMobile
+      ? 'repeat(2, 1fr)'
+      : 'repeat(auto-fit, minmax(250px, 1fr))',
     gap: '2rem',
     width: '100%',
   };
 
+  // カードの高さも、スマホの場合は小さく調整
   const performanceItemStyle: CSSProperties = {
     position: 'relative',
     textAlign: 'center',
@@ -165,22 +180,13 @@ export default function PerformanceOrderSection() {
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
     transition: 'all 0.3s ease',
     cursor: 'pointer',
-    height: '250px',
+    height: isMobile ? '150px' : '250px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'center',
     overflow: 'hidden',
     textDecoration: 'none',
-  };
-
-  const imageContainerStyle: CSSProperties = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    zIndex: 0,
   };
 
   return (
@@ -196,7 +202,7 @@ export default function PerformanceOrderSection() {
           style={titleStyle}
           initial={{ opacity: 0 }}
           animate={{ opacity: loaded ? 1 : 0 }}
-          transition={{ duration: 4, delay: 0.3 }}
+          transition={{ duration: 1 }}
         >
           PERFORMANCE ORDER
         </motion.h2>
@@ -207,6 +213,7 @@ export default function PerformanceOrderSection() {
           transition={{ duration: 1, delay: 0.3 }}
         >
           {performances.map((performance, index) => {
+            // ファイル名変換用
             const safeFileName = getSafeFileName(performance.name);
             return (
               <motion.a
@@ -221,7 +228,7 @@ export default function PerformanceOrderSection() {
                   boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
                 }}
               >
-                <div style={imageContainerStyle}>
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
                   <Image
                     src={`/images/${safeFileName}.JPG`}
                     alt={`${performance.name} dance`}
@@ -229,12 +236,7 @@ export default function PerformanceOrderSection() {
                     style={{ objectFit: 'cover', filter: 'grayscale(100%)' }}
                     priority
                   />
-                  {/* ここでカードごとにオーバーレイがフェードアウトする */}
-                  <motion.div
-                    initial={{ opacity: 1 }}
-                    whileInView={{ opacity: 0 }}
-                    transition={{ duration: 1, delay: 0.1 * index }}
-                    viewport={{ once: true, amount: 0.5 }}
+                  <div
                     style={{
                       position: 'absolute',
                       top: 0,

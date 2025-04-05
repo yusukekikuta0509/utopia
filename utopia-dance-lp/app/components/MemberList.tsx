@@ -1,7 +1,12 @@
 'use client';
 import { motion } from 'framer-motion';
 import React, { CSSProperties, useEffect, useState, useRef } from 'react';
+import { Quicksand } from 'next/font/google';
 
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+});
 
 export default function MemberList() {
   const [loaded, setLoaded] = useState(false);
@@ -152,7 +157,7 @@ export default function MemberList() {
     marginBottom: '1.5rem',
   };
 
-  const tabStyle = (isActive) => ({
+  const tabStyle = (isActive: boolean): CSSProperties => ({
     padding: '0.5rem 1.5rem',
     borderWidth: '1px',
     borderStyle: 'solid',
@@ -186,8 +191,8 @@ export default function MemberList() {
   };
 
   return (
-    // MemberList コンポーネントにも next/font で読み込んだフォントを適用するため、ルート要素に className を追加
-    <section id="member-list" ref={sectionRef} className="member-list" style={sectionStyle}>
+    // ルート要素に quicksand.className を追加して、Quicksand フォントを適用
+    <section id="member-list" ref={sectionRef} className={`${quicksand.className} member-list`} style={sectionStyle}>
       {/* 背景動画 */}
       <div style={videoContainerStyle}>
         <video ref={videoRef} loop muted playsInline style={videoStyle}>

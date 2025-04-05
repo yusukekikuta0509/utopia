@@ -108,7 +108,7 @@ export default function LoadingScreen() {
     bottom: '15rem',
     left: '50%',
     transform: 'translateX(-50%)',
-    fontSize: '0.75rem',
+    fontSize: '0.7rem',
     textAlign: 'center',
     color: '#fff',
     opacity: 0.8,
