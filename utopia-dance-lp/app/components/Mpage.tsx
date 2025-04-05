@@ -109,14 +109,44 @@ export default function PerformanceOrderSection() {
     textAlign: 'center',
   };
 
+  // タイトルに黒いシャドウを適用して視認性を向上
   const titleStyle: CSSProperties = {
     fontSize: 'clamp(2rem, 5vw, 3.5rem)',
     fontWeight: '300',
     letterSpacing: '0.2em',
     marginBottom: '3rem',
     textTransform: 'uppercase',
-    textShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
+    textShadow: '2px 2px 4px #000',
     color: '#fff',
+  };
+
+  // パフォーマンスアイテム内テキスト用のスタイル
+  const contentStyle: CSSProperties = {
+    position: 'relative',
+    zIndex: 1,
+    padding: '1rem',
+    width: '100%',
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: '1rem',
+    textShadow: '2px 2px 4px #000',
+  };
+
+  const idStyle: CSSProperties = {
+    fontSize: '0.875rem',
+    marginBottom: '0.25rem',
+    letterSpacing: '0.1em',
+    color: '#fff',
+    fontWeight: '400',
+    textShadow: '1px 1px 2px #000',
+  };
+
+  const nameStyle: CSSProperties = {
+    fontSize: '1.25rem',
+    letterSpacing: '0.15em',
+    fontWeight: '300',
+    color: '#fff',
+    textShadow: '1px 1px 2px #000',
   };
 
   const performanceListStyle: CSSProperties = {
@@ -153,32 +183,6 @@ export default function PerformanceOrderSection() {
     zIndex: 0,
   };
 
-  const contentStyle: CSSProperties = {
-    position: 'relative',
-    zIndex: 1,
-    padding: '1rem',
-    width: '100%',
-    color: '#fff',
-    textAlign: 'center',
-    marginBottom: '1rem',
-    textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
-  };
-
-  const idStyle: CSSProperties = {
-    fontSize: '0.875rem',
-    marginBottom: '0.25rem',
-    letterSpacing: '0.1em',
-    color: '#fff',
-    fontWeight: '400',
-  };
-
-  const nameStyle: CSSProperties = {
-    fontSize: '1.25rem',
-    letterSpacing: '0.15em',
-    fontWeight: '300',
-    color: '#fff',
-  };
-
   return (
     <section ref={sectionRef} style={sectionStyle}>
       <div style={videoContainerStyle}>
@@ -192,7 +196,7 @@ export default function PerformanceOrderSection() {
           style={titleStyle}
           initial={{ opacity: 0 }}
           animate={{ opacity: loaded ? 1 : 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 4, delay: 0.3 }}
         >
           PERFORMANCE ORDER
         </motion.h2>
@@ -203,7 +207,6 @@ export default function PerformanceOrderSection() {
           transition={{ duration: 1, delay: 0.3 }}
         >
           {performances.map((performance, index) => {
-            // safeFileName 用の変換を実施
             const safeFileName = getSafeFileName(performance.name);
             return (
               <motion.a
@@ -225,6 +228,22 @@ export default function PerformanceOrderSection() {
                     fill
                     style={{ objectFit: 'cover', filter: 'grayscale(100%)' }}
                     priority
+                  />
+                  {/* ここでカードごとにオーバーレイがフェードアウトする */}
+                  <motion.div
+                    initial={{ opacity: 1 }}
+                    whileInView={{ opacity: 0 }}
+                    transition={{ duration: 1, delay: 0.1 * index }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                      pointerEvents: 'none',
+                    }}
                   />
                 </div>
                 <div style={contentStyle}>

@@ -206,7 +206,7 @@ export default function MemberList() {
             animate={{ opacity: loaded ? 1 : 0 }}
             transition={{ duration: 1 }}
           >
-            Menber List
+            MEMBER LIST
           </motion.h2>
           
           {!showMembers ? (
@@ -247,7 +247,7 @@ export default function MemberList() {
               
               <div style={membersContainerStyle}>
                 <div style={generationTitleStyle}>
-                  {activeGeneration === '16th' ? '16期生' : '17期生'}
+                  {activeGeneration === '16th' ? '16th' : '17th'}
                 </div>
                 <div style={memberGridStyle}>
                   {members[activeGeneration].map((member, index) => (

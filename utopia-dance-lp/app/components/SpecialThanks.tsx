@@ -136,7 +136,7 @@ export default function SpecialThanks() {
             animate={{ opacity: loaded ? 1 : 0 }}
             transition={{ duration: 1 }}
           >
-            Special Thanks
+            SPECIAL THANKS
           </motion.h2>
           
           <motion.p
