@@ -25,11 +25,29 @@ function chunkArray<T>(array: T[], chunkSize: number): T[][] {
   return result;
 }
 
+/**
+ * 表示用の名前（例："R&B"）を安全なファイル名に変換する関数
+ * 例: "r&b" -> "r-and-b"
+ */
+function getSafeFileName(name: string): string {
+  const lowerName = name.toLowerCase();
+  const safeFileNameMap: Record<string, string> = {
+    "r&b": "r-and-b",
+    // 他の特殊な名前があればここに追加可能
+  };
+  return safeFileNameMap[lowerName] || encodeURIComponent(lowerName);
+}
+
 // 動画ファイルのパスを生成するヘルパー関数
 function getEncodedVideoPath(name: string, suffix: string = '', ext: string = 'mp4'): string {
-  // safeName はそのまま表示に使い、ファイルパス部分のみエンコード
-  const fileName = encodeURIComponent(name.toLowerCase());
+  const fileName = getSafeFileName(name);
   return `/videos/${fileName}${suffix ? '-' + suffix : ''}.${ext}`;
+}
+
+// 画像ファイルのパスを生成するヘルパー関数
+function getEncodedImagePath(name: string, ext: string = 'JPG'): string {
+  const fileName = getSafeFileName(name);
+  return `/images/${fileName}.${ext}`;
 }
 
 const DanceGenre: React.FC<DanceGenreProps> = ({
@@ -38,12 +56,13 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
   choreographer,
   performers = [],
 }) => {
+  // 表示用の名前はそのまま利用（"R&B" はそのまま出力される）
   const safeName = name || 'default';
   const [loaded, setLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // performers を 1 行あたり 7 人に調整
+  // 出演者を行ごとに分割（例：1行あたり 6 人）
   const chunkedPerformers = chunkArray(performers, 6);
 
   useEffect(() => {
@@ -62,7 +81,7 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
           }
         });
       },
-      { threshold: 0.1 } // セクションの 10% が表示されたら発火
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) {
@@ -71,7 +90,7 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
     return () => observer.disconnect();
   }, [loaded]);
 
-  // インラインスタイル
+  // 各種スタイル
   const sectionStyle: CSSProperties = {
     position: 'relative',
     width: '100%',
@@ -113,7 +132,6 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
     zIndex: 1,
   };
 
-  // 背景のぼかし削除（オーバーレイ）
   const overlayStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
@@ -146,7 +164,6 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
     margin: '0 auto',
   };
 
-  // ジャンル名にエフェクトを追加
   const titleStyle: CSSProperties = {
     fontSize: 'clamp(2.5rem, 8vw, 4rem)',
     fontWeight: 'normal',
@@ -165,7 +182,6 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
     textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
   };
 
-  // 出演者セクションスタイル
   const performersContainerStyle: CSSProperties = {
     marginTop: '0.5rem',
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
@@ -194,11 +210,11 @@ const DanceGenre: React.FC<DanceGenreProps> = ({
 
   return (
     <section id={id} ref={sectionRef} className={quicksand.className} style={sectionStyle}>
-      {/* 上半分：写真 */}
+      {/* 上半分：画像 */}
       <div style={topHalfStyle}>
         <div style={imageContainerStyle}>
           <Image
-            src={`/images/${safeName.toLowerCase()}.JPG`}
+            src={getEncodedImagePath(safeName)}
             alt={`${safeName} dance`}
             fill
             style={{ objectFit: 'cover', filter: 'grayscale(100%)' }}

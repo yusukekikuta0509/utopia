@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import LoadingScreen from '@/components/LoadingScreen';
 import HeroSection from '@/components/HeroSection';
 import Mpage from '@/components/Mpage';
 import ExecutiveGreeting from '@/components/ExecutiveGreeting';
@@ -10,19 +11,19 @@ import MemberList from '@/components/MemberList';
 import Navbar from '@/components/Navbar';
 
 
+
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  // ページロード完了時の処理
-  const handleLoadComplete = () => {
-    setIsLoading(false);
-  };
-
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   useEffect(() => {
-    return () => {
-      // クリーンアップ処理
-    };
+    const timer = setTimeout(() => {
+      setIsInitialLoad(false);
+    }, 6500); // LoadingScreen の表示時間に合わせる（例：3.5秒）
+    return () => clearTimeout(timer);
   }, []);
+
+  if (isInitialLoad) {
+    return <LoadingScreen />;
+  }
 
   // ヘッダー順「op, new, middle, girls, style, R&B, jazz, waack, house, pop, break, lock」に基づく genres 配列
   const genres: DanceGenreProps[] = [
@@ -293,7 +294,7 @@ export default function Home() {
     },
     {
       id: 'M6',
-      name: 'RandB',
+      name: 'R&B',
       choreographer: '岡安理乃',
       performers: [
         '荒木朱華',
@@ -678,7 +679,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-black text-white">
       {/* メインコンテンツ */}
-      <div className={`transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+      
         <Navbar />
         <main className="flex-grow">
           <HeroSection />
@@ -690,6 +691,6 @@ export default function Home() {
           <MemberList />
         </main>
       </div>
-    </div>
+    
   );
 }

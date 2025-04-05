@@ -153,6 +153,7 @@ export default function PerformanceOrderSection() {
     color: '#fff',
     textAlign: 'center',
     marginBottom: '1rem',
+    textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
   };
 
   const idStyle: CSSProperties = {
